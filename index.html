@@ -257,7 +257,9 @@ svg.i { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-widt
 .hero__copy .d-xl { font-size: clamp(40px, 4.5vw, 72px); line-height: 1.0; }
 .hero__copy .d-xl em { color: var(--oxblood); }
 .hero__ctas { display: flex; flex-wrap: wrap; gap: 10px; }
-.hero__ctas .btn { padding-inline: 22px; }
+/* the two primary calls to action: side by side when they fit, stacked full width when they don't */
+.hero__ctas--main { gap: 12px; }
+.btn--hero { flex: 1 1 auto; min-height: 66px; padding-inline: 32px; font-size: 14px; letter-spacing: .15em; font-weight: 600; }
 .hero__facts { display: flex; gap: 28px; flex-wrap: wrap; padding-top: 22px; border-top: 1px solid var(--rule); }
 .hero__fact { display: grid; gap: 2px; }
 .hero__fact b { font-family: var(--f-display); font-weight: 400; font-size: 30px; line-height: 1; }
@@ -679,6 +681,9 @@ svg.i { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-widt
   box-shadow: 0 14px 30px -12px rgba(28,21,23,.5); transition: background .2s;
 }
 .notes-toggle:hover { background: var(--oxblood); }
+@media (min-width: 1025px) { /* desktop: a slim tab on the left edge, clear of the page's calls to action */
+  .notes-toggle { left: 0; bottom: auto; top: 50%; transform: translateY(-50%) rotate(180deg); writing-mode: vertical-rl; height: auto; width: 38px; padding: 18px 0; border-radius: 10px 0 0 10px; justify-content: center; }
+}
 .notes-toggle kbd { font: 500 10.5px/1 var(--f-mono); border: 1px solid rgba(251,250,248,.35); padding: 3px 6px; border-radius: 4px; }
 .notes-toggle__dot { width: 8px; height: 8px; border-radius: 50%; background: var(--blush-2); }
 .notes-on .notes-toggle { background: var(--oxblood); }
@@ -818,6 +823,7 @@ svg.i { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-widt
   .review div { grid-template-columns: minmax(0, 1fr); gap: 2px; }
   .search__results { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .feature__model { font-size: 21px; }
+  .btn--hero { flex-basis: 100%; min-height: 60px; font-size: 13.5px; }
   .hero__facts { gap: 20px; }
   .notes-toggle { left: 12px; width: 44px; padding: 0; justify-content: center; font-size: 0; letter-spacing: 0; gap: 0; }
   .notes-toggle__dot { width: 10px; height: 10px; }
@@ -1671,7 +1677,7 @@ window.ECJ = (function () {
         <span class="label">Family owned since 1986 · Boca Raton</span>
         <h1 class="d-xl">Rare watches, diamonds &amp; Hermès, <em>shown in private.</em></h1>
         <p class="lede">Pre-owned and unworn pieces from Rolex, Patek Philippe, Audemars Piguet, Van Cleef &amp; Arpels and Hermès, authenticated by our specialists and shown at our private salon in Royal Palm Plaza.</p>
-        <div class="hero__ctas"><a class="btn" href="#/new">Shop new arrivals</a><a class="btn btn--ghost" href="#/salon">Book a private viewing</a></div>
+        <div class="hero__ctas hero__ctas--main"><a class="btn btn--hero" href="#/new">Shop new arrivals</a><a class="btn btn--hero btn--salon" href="#/salon">Book a private viewing</a></div>
         <a class="feature" id="heroFeature" href="#/piece/${f.id}">${featureInner(f)}</a>
       </div>
       <div class="stage" id="stage" data-note="hero">
