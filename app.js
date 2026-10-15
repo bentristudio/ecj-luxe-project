@@ -154,6 +154,12 @@
     { href: '#/hermes', id: 75683, label: 'Hermès', tone: 'sand' },
     { href: '#/home-office', id: 72983, label: 'Home & Office', tone: 'mist' }
   ];
+  // "The ones worth collecting" slideshow: one photograph per category, ECJ's own
+  const SHOW = [
+    { img: 'b-yellow-diamond', href: '#/jewelry/natural-diamonds', pos: '50% 50%', alt: 'A radiant-cut fancy yellow diamond ring with trapezoid side stones' },
+    { img: 'b-we-buy-watches', href: '#/watches/daytona', pos: '50% 45%', alt: 'A steel Rolex Cosmograph Daytona presented on a black glove' },
+    { img: 'b-handbags', href: '#/hermes', pos: '54% 50%', alt: 'A Hermès Himalaya Birkin carried in the street' }
+  ];
   const JUSTIN = [75624, 75651, 75638, 70101].map(id => byId[id]);
   const FEATURED = byId[75638]; // platinum Daytona, ice-blue dial: its photo fills a double-size frame
   const WORN = [69022, 75142, 70101, 75434, 75441, 75268, 71981, 74573, 75638, 75651].map(id => byId[id]);
@@ -173,20 +179,21 @@
 
   function homeHTML() {
     return `
-    <section class="hero2 hero2--split" data-note="hero">
-      <div class="hero2__panel">
-        <div class="hero2__copy">
-          <h1 class="hero2__title">Rare Watches, Diamonds &amp; Hermès, Shown in Private</h1>
-          <p class="hero2__sub">Family owned since 1986. Pre-owned and unworn pieces, authenticated in-house and shown by appointment in Boca Raton.</p>
-          <div class="hero__ctas hero__ctas--main"><a class="btn btn--hero btn--white" href="#/new">Shop new arrivals</a><a class="btn btn--hero btn--salon" href="#/salon">Book a private viewing</a></div>
+    <section class="hero5" data-note="hero">
+      <img class="hero5__img" src="${SRC('hero-datejust')}" width="2400" height="1209" alt="A two-tone Rolex Datejust 41 with a slate Roman numeral dial, worn with a blue shirt">
+      <div class="hero5__veil" aria-hidden="true"></div>
+      <div class="hero5__inner">
+        <div class="hero5__copy">
+          <span class="label hero5__eyebrow">Family owned since 1986 · Boca Raton</span>
+          <h1 class="hero5__title">Rare Watches, Jewelry &amp; Hermès, Shown in Private</h1>
+          <p class="hero5__sub">Pre-owned and unworn pieces, authenticated in&#8209;house and shown by appointment.</p>
+          <div class="hero5__ctas"><a class="btn btn--hero btn--ghost" href="#/new">Shop new arrivals</a><a class="btn btn--hero btn--salon" href="#/salon">Book a private viewing</a></div>
         </div>
-        <p class="hero2__credit"><span>On the cover</span>Rolex Cosmograph Daytona in yellow gold</p>
       </div>
-      <a class="hero2__media" href="#/watches/daytona" tabindex="-1" aria-hidden="true"><img class="hero2__img" src="${SRC('hero-daytona')}" alt=""></a>
     </section>
 
     <section class="section2"><div class="wrap" data-note="cats">
-      ${headL('The collection', 'Many Pieces, Chosen One at a Time', ['Browse new arrivals', '#/new'])}
+      ${headL('The collection', 'Many Pieces, Chosen Carefully', ['Browse new arrivals', '#/new'])}
       <div class="mosaic">
         ${STILL.map((t, i) => `<a class="mtile mtile--${i} tile--${t.tone}" href="${t.href}">
           <div class="tile__img"><img src="${byId[t.id].imgs[0]}" alt="${esc(fullName(byId[t.id]))}" loading="lazy"></div>
@@ -196,32 +203,36 @@
     </div></section>
 
     <section class="manifesto manifesto--croc" data-note="manifesto">
-      <img class="manifesto__tex" src="${SRC('tex-alligator')}" alt="" aria-hidden="true">
-      <div class="wrap manifesto__grid">
-      <div class="manifesto__main">
-        <img class="manifesto__mark" src="${SRC('logo-mono.png')}" alt="">
+      <img class="manifesto__tex" src="${SRC('tex-croc')}" alt="" aria-hidden="true">
+      <div class="wrap manifesto__inner">
+        <span class="manifesto__mark" style="--logo:url('${SRC('logo-mono.png')}')" aria-hidden="true"></span>
         <p class="manifesto__text">Forty years of relationships in fine watches and jewelry, now in a private salon in Boca Raton.</p>
+        <p class="manifesto__sub">Rare references, signed jewels and Hermès icons, each authenticated in&#8209;house and shown by appointment at 201-299 Via De Palmas.</p>
+        <span class="manifesto__rule" aria-hidden="true"></span>
+        <blockquote class="manifesto__quote">“Our brand has always been about offering a luxury experience that exceeds expectations.”<cite>Bobby Yampolsky, Founder</cite></blockquote>
+        <a class="btn manifesto__btn" href="#/watches">Explore the collection</a>
       </div>
-      <div class="manifesto__side">
-        <p>Rare references, signed jewels and Hermès icons, each authenticated in-house and shown by appointment at 201-299 Via De Palmas.</p>
-        <blockquote>“Our brand has always been about offering a luxury experience that exceeds expectations.”<cite>Bobby Yampolsky, Founder</cite></blockquote>
-        <a class="btn btn--white" href="#/watches">Explore the collection</a>
-      </div>
-    </div></section>
+    </section>
 
-    <section class="section2"><div class="wrap editorial" data-note="editorial">
-      <figure class="editorial__big"><a href="#/jewelry/natural-diamonds"><img src="${SRC('b-yellow-diamond')}" alt="A radiant-cut fancy yellow diamond ring with trapezoid side stones" loading="lazy"></a>
-        <figcaption class="fig">Fancy yellow diamond, radiant cut, with trapezoid side stones</figcaption></figure>
+    <section class="section2"><div class="wrap editorial2" data-note="editorial">
+      <div class="show" id="show" role="region" aria-roledescription="carousel" aria-label="The ones worth collecting">
+        <div class="show__stage">
+          ${SHOW.map((x, i) => `<a class="show__slide${i ? '' : ' is-on'}" href="${x.href}" aria-hidden="${i ? 'true' : 'false'}" tabindex="${i ? -1 : 0}"><img src="${SRC(x.img)}" alt="${esc(x.alt)}" style="object-position:${x.pos}" loading="lazy"></a>`).join('')}
+          <button class="show__arrow show__arrow--prev" data-act="show-step" data-dir="-1" aria-label="Previous photograph">${ARROW}</button>
+          <button class="show__arrow show__arrow--next" data-act="show-step" data-dir="1" aria-label="Next photograph">${ARROW}</button>
+        </div>
+        <div class="show__bar">
+          <div class="show__dots">${SHOW.map((x, i) => `<button class="show__dot${i ? '' : ' is-on'}" data-act="show" data-i="${i}" aria-label="Photograph ${i + 1} of ${SHOW.length}"${i ? '' : ' aria-current="true"'}><i></i></button>`).join('')}</div>
+        </div>
+      </div>
       <div class="editorial__side">
-        <figure class="editorial__small"><a href="#/watches/daytona"><img src="${SRC('b-we-buy-watches')}" alt="A steel Rolex Cosmograph Daytona presented on a black glove" loading="lazy"></a>
-          <figcaption class="fig">Rolex Cosmograph Daytona, presented in the salon</figcaption></figure>
         <h2 class="h2c">The Ones Worth Collecting</h2>
         <p class="sub">Chosen piece by piece by the ECJ Luxe specialists</p>
         <a class="btn btn--outline" href="#/new">Shop the edit</a>
       </div>
     </div></section>
 
-    <section class="section2 justin" data-note="justin"><div class="wrap justin__grid">
+    <section class="section2 section2--ruled justin" data-note="justin"><div class="wrap justin__grid">
       <div class="justin__copy">
         <svg class="justin__badge" viewBox="0 0 120 120" aria-hidden="true"><text font-size="10.5" letter-spacing="3" fill="currentColor"><textPath href="#seal-ring" textLength="268" lengthAdjust="spacing">JUST IN · JUST IN · JUST IN ·</textPath></text></svg>
         <ol class="justin__list">${JUSTIN.map((p, i) => `<li><button data-act="justin" data-i="${i}" aria-pressed="${i === 0}">The ${esc(p.brand)} ${esc(p.model)}</button></li>`).join('')}</ol>
@@ -230,7 +241,7 @@
       <a class="justin__media" id="justinMedia" href="#/piece/${JUSTIN[0].id}">${justinMedia(JUSTIN[0])}</a>
     </div></section>
 
-    <section class="section2"><div class="wrap">
+    <section class="section2 section2--ruled"><div class="wrap">
       ${headL('Just arrived', 'New to the Salon', ['View all new arrivals', '#/new'])}
       <div class="grid grid--4 grid--home">${[FEATURED].concat(P.filter(p => p !== FEATURED).slice(0, 8)).map((p, i) => card(p, { note: i === 0 ? 'card' : '' })).join('')}</div>
     </div></section>
@@ -741,16 +752,15 @@
     home: [
       { k: 'utility', h: 'A black top bar, as on Jewels Aficionado', was: 'An orange “ECJ Luxe Collection Has Moved” banner.', now: 'The authentication promise, the new address and a booking link sit quietly on every page.', ref: 'Jewels Aficionado, Cartier' },
       { k: 'header', h: 'The official logo, given room', was: 'A small logo wedged between menu items.', now: 'The official ECJ Luxe lockup supplied by the brand anchors a clean white header. When the header condenses on scroll it switches to the official monogram.', ref: 'Cartier and Rolex headers', at: 'tr' },
-      { k: 'hero', h: 'A watch on the wrist, uncovered', was: 'A slider that took about 8 seconds to load and still showed the Mizner Park store.', now: 'ECJ’s own photograph of a yellow gold Daytona on the wrist, shown full strength beside a black panel rather than darkened under the text. The two primary actions sit in the panel.', ref: 'Rolex and Cartier split heroes' },
+      { k: 'hero', h: 'A full-width banner', was: 'A slider that took about 8 seconds to load and still showed the Mizner Park store.', now: 'One calm, full-width photograph of a watch worn by a man, in the spirit of ECJ’s Birkin banner. The copy sits on the photograph itself in dark ink over a soft ivory fade, with the two primary actions side by side. On tablets and phones the copy sits just below the photograph.', ref: 'Jewels Aficionado homepage banner' },
       { k: 'cats', h: 'An editorial mosaic, not four equal squares', was: 'Four identical tiles with small captions.', now: 'Watches lead at double size. The catalogue photos are restaged on sage, blush, sand and mist backdrops, so each category reads like a styled shoot, with an index-style caption.', ref: 'Jewels Aficionado category tiles; magazine contents pages' },
-      { k: 'manifesto', h: 'A point of view, on alligator', was: 'A centred heading and a button.', now: 'The statement and the founder’s words set on deep green alligator leather. The texture is real: it comes from the embossed leather in ECJ’s own jewelry photograph.' },
-      { k: 'editorial', h: 'An editorial pairing', now: 'A large and a small image, offset, with quiet captions. Only professional photography appears on the homepage.', ref: 'Jewels Aficionado “The Ones Worth Collecting”' },
+      { k: 'manifesto', h: 'The founder’s word, on alligator', was: 'A centred heading and a button.', now: 'The statement and the founder’s words set on glossy alligator leather tinted deep emerald, with the monogram in champagne gold foil and a hairline frame that recalls saddle stitching.', ref: 'Hermès alligator leather goods' },
+      { k: 'editorial', h: 'A slideshow of the ones worth collecting', now: 'Three of ECJ’s own photographs, one for jewelry, watches and Hermès, crossfade on their own. Arrows step through by hand, and the show pauses while the pointer or keyboard focus is on it.', ref: 'Jewels Aficionado “The Ones Worth Collecting”' },
       { k: 'justin', h: 'Just in', now: 'Pick a piece from the list and the photograph changes, full-bleed in a clean frame, with the reference, year and set beside it.', ref: 'Jewels Aficionado “Just In” feature' },
       { k: 'card', h: 'Image-first product cards', was: 'Long product titles under small thumbnails.', now: 'Cards are mostly image, with a second angle on hover where one exists. Reference and year stay for collectors.' },
       { k: 'worn', h: 'Worn, not just collected', was: 'ECJ’s lifestyle photography appeared once, as small banners.', now: 'Two of ECJ’s professional lifestyle photographs as a full spread on black. Phone snapshots stay inside product galleries.', ref: 'Jewels Aficionado “Styled by The It Crowd”' },
       { k: 'quotes', h: 'A client’s words, set like a press quote', now: 'One real review, large and centred, instead of a small rotating slider.', ref: 'Jewels Aficionado press quote' },
       { k: 'services', h: 'Salon, selling and sourcing as an editorial spread', was: 'Three photo cards with text laid over a dark gradient.', now: 'The Salon leads at full height; selling and sourcing stack beside it. Captions sit beneath clean photographs, each with a rule, a label, a title and one sentence.', ref: 'Magazine spreads; Jewels Aficionado boutique cards' },
-      { k: 'sign', h: 'The brand signs every page', now: 'The official lockup, large and in white, closes every page. The official monogram also sits inside the authentication seal on product photos.' },
       { k: 'legal', h: 'Legal notices, BBB and ADA', now: 'ECJ’s existing disclaimers carried over word for word, the official BBB Accredited Business seal served live by BBB so the A+ rating stays current, and an accessibility icon linking to the ADA statement.' }
     ],
     collection: [
@@ -786,7 +796,7 @@
     const isHome = state.view === 'home';
     return `<p class="notes-intro">Redesign concept for ECJ Luxe Collection. Each number marks a change on this page and the leading sites that informed it. Press <b>N</b> to show or hide.</p>
       ${isHome ? `<figure class="notes-before"><img src="${SRC('before-home')}" alt="The current ecjluxe.com homepage"><figcaption>Before: ecjluxe.com today, at 1440px after the slider loads.</figcaption></figure>
-      <div class="n-item" style="grid-template-columns:minmax(0,1fr)"><div><h4>Direction after the client review</h4><p>The first concept felt generic. This version is led by photography, taking cues from Jewels Aficionado: full-bleed images, styled still lifes, centred serif headings and a quiet black-and-white frame.</p><p>Every image is ECJ’s own, from their banners and product listings.</p></div></div>` : ''}
+      <div class="n-item" style="grid-template-columns:minmax(0,1fr)"><div><h4>Direction after the client review</h4><p>The first concept felt generic. This version is led by photography, taking cues from Jewels Aficionado: full-bleed images, styled still lifes, centred serif headings and a quiet black-and-white frame.</p><p>Product and banner photography is ECJ’s own. The homepage banner and the alligator texture are free-licence Unsplash photographs, to be replaced with ECJ shots if they prefer.</p></div></div>` : ''}
       ${list.map((n, i) => `<div class="n-item" id="note-${n.k}"><span class="n-item__num">${i + 1}</span><div><h4>${esc(n.h)}</h4>${n.was ? `<p class="n-was"><b>Before:</b> ${esc(n.was)}</p>` : ''}<p>${esc(n.now)}</p>${n.ref ? `<p class="n-ref">Reference: ${esc(n.ref)}</p>` : ''}<button data-act="note-go" data-k="${n.k}">Show on page</button></div></div>`).join('')}
       <p class="notes-intro" style="margin-top:20px;font-size:12.5px">Prototype built with 30 pieces from ECJ’s live inventory on 12 October 2026.</p>`;
   }
@@ -856,7 +866,7 @@
   }
 
   function mount(view) {
-    if (view === 'home') { mountHero(); mountRail(); mountPeek(); }
+    if (view === 'home') { mountHero(); mountRail(); mountPeek(); mountShow(); }
     if (view === 'collection') renderResults();
     if (view === 'piece') mountGallery();
     if (view === 'sell') renderFlow();
@@ -882,6 +892,25 @@
     const vis = () => stage.classList.toggle('is-paused', document.hidden);
     document.addEventListener('visibilitychange', vis);
     heroCleanup = () => document.removeEventListener('visibilitychange', vis);
+  }
+  // slideshow: the active indicator's fill animation sets the pace, so pausing the animation pauses the show
+  function mountShow() {
+    const show = $('#show'); if (!show) return;
+    const slides = $$('.show__slide', show), dots = $$('.show__dot', show);
+    let i = 0;
+    const go = n => {
+      i = (n + slides.length) % slides.length;
+      slides.forEach((s, k) => { const on = k === i; s.classList.toggle('is-on', on); s.setAttribute('aria-hidden', String(!on)); s.tabIndex = on ? 0 : -1; });
+      dots.forEach((d, k) => { d.classList.remove('is-on'); if (k === i) d.setAttribute('aria-current', 'true'); else d.removeAttribute('aria-current'); });
+      void show.offsetWidth; dots[i].classList.add('is-on');
+    };
+    show._go = go;
+    show._step = d => go(i + d);
+    show.addEventListener('animationend', e => { if (e.animationName === 'show-fill') go(i + 1); });
+    if (FINE) {
+      show.addEventListener('mouseenter', () => show.classList.add('is-hover'));
+      show.addEventListener('mouseleave', () => show.classList.remove('is-hover'));
+    }
   }
   function mountRail() {
     const rail = $('#rail'), bar = $('#railBar'); if (!rail) return;
@@ -941,6 +970,8 @@
         break;
       }
       case 'worn': { const r = $('#worn'); r.scrollBy({ left: Number(t.dataset.dir) * (r.firstElementChild.offsetWidth + 16) * 2, behavior: 'smooth' }); break; }
+      case 'show': { const sh = $('#show'); if (sh && sh._go) sh._go(Number(t.dataset.i)); break; }
+      case 'show-step': { const sh = $('#show'); if (sh && sh._step) sh._step(Number(t.dataset.dir)); break; }
       case 'slide': { const st = $('#stage'); if (st && st._go) st._go(Number(t.dataset.i)); break; }
       case 'rail': { const r = $('#rail'); const c = r.firstElementChild; r.scrollBy({ left: Number(t.dataset.dir) * (c.offsetWidth + 24) * 2, behavior: 'smooth' }); break; }
       case 'quotes': { const q = $('#quotes'); q.scrollBy({ left: Number(t.dataset.dir) * q.firstElementChild.offsetWidth, behavior: 'smooth' }); break; }

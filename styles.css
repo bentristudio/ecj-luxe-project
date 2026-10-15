@@ -1355,3 +1355,160 @@ svg.i { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-widt
   .sell-hero .d-xl, .page-head .d-xl { font-size: 34px; line-height: 1.12; }
   .aside-card { padding: 22px; }
 }
+
+
+
+
+/* ═════════════ Hero: full-width banner ═════════════ */
+/* A 2400×1209 photograph, cover-fitted, never drawn above its native size on screens up to 2400px.
+   The copy sits on the calm left third in dark ink, over an ivory fade that stops short of the watch. */
+.hero5 { position: relative; isolation: isolate; overflow: hidden; height: clamp(540px, min(50vw, calc(100vh - 170px)), 760px); background: #F3F1ED; color: var(--ink); }
+.hero5__img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 42%; z-index: -2; }
+.hero5__veil { position: absolute; inset: 0; z-index: -1;
+  background: linear-gradient(90deg, rgba(243,241,237,.95) 0%, rgba(243,241,237,.9) 22%, rgba(243,241,237,.62) 33%, rgba(243,241,237,.18) 42%, rgba(243,241,237,0) 48%); }
+.hero5__inner { height: 100%; display: flex; align-items: center; padding: 0 24px 0 clamp(24px, 5vw, 96px); }
+/* the bracelet starts 36% across the photo, so the copy ends by about 35vw at every width */
+.hero5__copy { display: grid; justify-items: start; gap: 18px; width: min(540px, calc(35vw - clamp(24px, 5vw, 96px))); }
+.hero5__eyebrow { color: var(--ink-2); }
+.hero5__title { margin: 0; font: 400 clamp(36px, 3.05vw, 50px)/1.08 var(--f-display); letter-spacing: 0; text-wrap: balance; }
+.hero5__sub { margin: 0; max-width: 36ch; font-size: 16.5px; line-height: 1.6; color: var(--ink-2); }
+.hero5__ctas { display: flex; flex-wrap: nowrap; width: max-content; gap: 12px; margin-top: 10px; }
+.hero5 .btn--hero { flex: 0 0 auto; min-height: 58px; padding: 0 22px; font-size: 12px; letter-spacing: .1em; }
+.hero5 .btn--ghost { background: rgba(255,255,255,.55); border-color: var(--ink); color: var(--ink); }
+.hero5 .btn--ghost:hover { background: var(--ink); color: #fff; }
+/* tablets and phones: photograph on top, cropped to the watch; copy below on ivory */
+@media (max-width: 1099px) {
+  .hero5 { height: auto; display: flex; flex-direction: column; }
+  .hero5__img { position: static; display: block; aspect-ratio: 5 / 2; height: auto; object-position: 54% 45%; }
+  .hero5__veil { display: none; }
+  .hero5__inner { height: auto; justify-content: center; padding: 40px var(--gutter) 52px; }
+  .hero5__copy { justify-items: center; text-align: center; width: auto; max-width: 620px; }
+  .hero5__title { font-size: clamp(32px, 4.4vw, 44px); max-width: 16em; }
+  .hero5__ctas { justify-content: center; flex-wrap: wrap; width: auto; }
+  .hero5 .btn--hero { padding: 0 28px; font-size: 12.5px; }
+}
+@media (max-width: 900px) {
+  .hero5__img { aspect-ratio: 16 / 10; }
+}
+@media (max-width: 720px) {
+  .hero5__img { aspect-ratio: 1 / 1; object-position: 53% 50%; }
+  .hero5__inner { padding-top: 30px; padding-bottom: 40px; }
+  .hero5__copy { gap: 14px; }
+  .hero5__title { font-size: 30px; max-width: 20ch; }
+  .hero5__sub { font-size: 15px; }
+  .hero5__ctas { display: grid; width: min(100%, 340px); gap: 10px; margin-top: 6px; }
+  .hero5 .btn--hero { min-height: 54px; padding: 0 20px; font-size: 12.5px; }
+}
+
+
+/* ═════════════ Compact header ═════════════ */
+/* a slim logo row over a slim menu row, in the spirit of Jewels Aficionado */
+.utility .wrap { min-height: 34px; }
+.utility__left { height: 34px; }
+.header__bar { min-height: 82px; }
+.logo__img { height: 62px; }
+.is-scrolled .header__bar { min-height: 60px; }
+.logo__mono { height: 30px; }
+.nav__link { height: 44px; }
+.nav__link::after { bottom: 11px; }
+.is-scrolled .nav__link { height: 40px; }
+.is-scrolled .nav__link::after { bottom: 9px; }
+@media (max-width: 1024px) {
+  .header__bar { min-height: 72px; }
+  .logo__img { height: 54px; }
+  .is-scrolled .header__bar { min-height: 58px; }
+  .logo__mono { height: 26px; }
+}
+@media (max-width: 720px) {
+  .header__bar { min-height: 66px; }
+  .logo__img { height: 50px; }
+}
+
+
+/* ═════════════ Founder statement on emerald alligator ═════════════ */
+/* glossy black alligator, screened onto emerald so the scales glint green; centred like a printed card */
+.manifesto--croc { background: #0F3A2C; color: #F6F1E7; padding-block: clamp(88px, 10vw, 150px); text-align: center; }
+.manifesto--croc .manifesto__tex { object-position: 50% 30%; mix-blend-mode: screen; filter: grayscale(1) brightness(.5) contrast(1.3); }
+.manifesto--croc::after { background: radial-gradient(62% 58% at 50% 50%, rgba(5,20,14,.7) 0%, rgba(5,20,14,.34) 64%, rgba(5,20,14,.5) 100%); }
+.manifesto--croc::before { content: ""; position: absolute; inset: clamp(12px, 1.6vw, 22px); z-index: 0; pointer-events: none; border: 1px dashed rgba(220,199,162,.45); }
+.manifesto__inner { position: relative; z-index: 1; display: grid; justify-items: center; gap: 20px; max-width: 1000px; }
+.manifesto--croc .manifesto__mark { display: block; width: 88px; aspect-ratio: 1269 / 719; filter: none;
+  -webkit-mask: var(--logo) center / contain no-repeat; mask: var(--logo) center / contain no-repeat;
+  background: linear-gradient(115deg, #A97F3E 0%, #F3E1B4 34%, #C59C57 52%, #F6E7C1 70%, #A47A3A 100%); }
+.manifesto--croc .manifesto__text { margin: 10px 0 0; max-width: 28ch; color: #F6F1E7; font-size: clamp(30px, 3.3vw, 50px); line-height: 1.16; text-wrap: balance; }
+.manifesto__sub { margin: 0; max-width: 54ch; font-size: 16px; line-height: 1.7; color: rgba(246,241,231,.76); }
+.manifesto__rule { width: 56px; height: 1px; margin-top: 12px; background: var(--champagne); }
+.manifesto__quote { margin: 4px 0 0; max-width: 36ch; padding: 0; border: 0; font: 600 clamp(20px, 1.75vw, 26px)/1.42 var(--f-display); color: #F6F1E7; text-wrap: balance; }
+.manifesto__quote cite { display: block; margin-top: 16px; font: 500 11px/1 var(--f-sans); font-style: normal; letter-spacing: .22em; text-transform: uppercase; color: var(--champagne); }
+.manifesto__btn { margin-top: 14px; min-height: 56px; padding: 0 36px; background: transparent; border-color: var(--champagne); color: #F6F1E7; }
+.manifesto__btn:hover { background: var(--champagne); border-color: var(--champagne); color: var(--ink); }
+@media (max-width: 720px) {
+  .manifesto--croc { padding-block: 72px 80px; }
+  .manifesto__inner { gap: 16px; padding-inline: 30px; }
+  .manifesto--croc .manifesto__mark { width: 68px; }
+  .manifesto--croc .manifesto__text { font-size: 28px; }
+  .manifesto__sub { font-size: 15px; }
+  .manifesto__quote { font-size: 19px; }
+  .manifesto__btn { width: min(100%, 320px); }
+}
+
+
+/* ═════════════ The ones worth collecting: slideshow ═════════════ */
+.editorial2 { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: clamp(32px, 6vw, 96px); align-items: center; }
+.editorial2 .editorial__side { padding-top: 0; }
+.show { display: grid; gap: 16px; min-width: 0; }
+.show__stage { position: relative; aspect-ratio: 4 / 3; overflow: hidden; background: var(--stone); }
+.show__slide { position: absolute; inset: 0; opacity: 0; visibility: hidden; transition: opacity 1.1s var(--ease), visibility 0s linear 1.1s; }
+.show__slide.is-on { opacity: 1; visibility: visible; transition: opacity 1.1s var(--ease), visibility 0s; z-index: 1; }
+.show__slide img { width: 100%; height: 100%; object-fit: cover; }
+.show__slide.is-on img { animation: show-zoom 7s var(--ease) both; }
+@keyframes show-zoom { from { transform: scale(1.06); } to { transform: scale(1); } }
+.show__bar { display: flex; align-items: center; gap: 18px; }
+.show__dots { display: flex; gap: 10px; flex: 1; }
+.show__dot { flex: 1; max-width: 120px; height: 24px; padding: 0; background: none; border: 0; cursor: pointer; display: flex; align-items: center; }
+.show__dot i { display: block; width: 100%; height: 2px; background: var(--rule); position: relative; overflow: hidden; }
+.show__dot i::after { content: ""; position: absolute; inset: 0; background: var(--ink); transform: scaleX(0); transform-origin: left; }
+.show__dot.is-on i::after { animation: show-fill 5.5s linear both; }
+@keyframes show-fill { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+/* pauses while the pointer or keyboard focus is on it; taps on phones keep it playing */
+.show.is-hover .show__dot.is-on i::after, .show:has(:focus-visible) .show__dot.is-on i::after,
+.show.is-hover .show__slide.is-on img, .show:has(:focus-visible) .show__slide.is-on img { animation-play-state: paused; }
+.show__arrow { position: absolute; top: 50%; z-index: 2; width: 50px; height: 50px; margin-top: -25px; display: grid; place-items: center; padding: 0;
+  border: 0; border-radius: 50%; background: rgba(255,255,255,.9); color: var(--ink); cursor: pointer; box-shadow: 0 8px 24px -10px rgba(0,0,0,.4); transition: background .2s, transform .2s; }
+.show__arrow svg { width: 17px; height: 11px; }
+.show__arrow--prev { left: 18px; }
+.show__arrow--prev svg { transform: scaleX(-1); }
+.show__arrow--next { right: 18px; }
+.show__arrow:hover { background: #fff; transform: scale(1.06); }
+@media (max-width: 720px) {
+  .show__arrow { width: 42px; height: 42px; margin-top: -21px; }
+  .show__arrow--prev { left: 12px; }
+  .show__arrow--next { right: 12px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .show__slide.is-on img { animation: none; }
+  .show__dot.is-on i::after { animation: none; transform: scaleX(1); }
+}
+@media (max-width: 900px) {
+  .editorial2 { grid-template-columns: minmax(0, 1fr); gap: 36px; }
+}
+@media (max-width: 720px) {
+  .show__stage { aspect-ratio: 1 / 1; }
+}
+
+/* service titles: bold */
+.svc__text h3 { font-weight: 600; }
+
+/* Just In: a white ground, so the white studio photographs sit straight on the page */
+.justin { background: #fff; }
+.justin__plate { background: #fff; box-shadow: none; }
+.justin__product { mix-blend-mode: multiply; }
+
+/* short centred hairline between white sections that sit back to back */
+.section2--ruled { position: relative; }
+.section2--ruled::before { content: ""; position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+  width: clamp(72px, 9vw, 140px); border-top: .5px solid #000; }
+
+/* client quote: upright and bold, set like the founder's words */
+.quote2 blockquote { font-style: normal; font-weight: 600; font-size: clamp(26px, 2.8vw, 40px); line-height: 1.3; letter-spacing: 0; max-width: 30ch; }
+.quote2 cite { color: var(--champagne-ink); }
