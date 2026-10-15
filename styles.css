@@ -1354,7 +1354,7 @@ svg.i { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-widt
 /* ═════════════ Hero: full-width banner ═════════════ */
 /* A 2400×1209 photograph, cover-fitted, never drawn above its native size on screens up to 2400px.
    The copy sits on the calm left third in dark ink, over an ivory fade that stops short of the watch. */
-.hero5 { position: relative; isolation: isolate; overflow: hidden; height: clamp(540px, min(50vw, calc(100vh - 170px)), 760px); background: #F3F1ED; color: var(--ink); }
+.hero5 { position: relative; isolation: isolate; overflow: hidden; height: clamp(540px, min(50vw, calc(100vh - 136px)), 760px); background: #F3F1ED; color: var(--ink); }
 .hero5__img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 42%; z-index: -2; }
 .hero5__veil { position: absolute; inset: 0; z-index: -1;
   background: linear-gradient(90deg, rgba(243,241,237,.95) 0%, rgba(243,241,237,.9) 22%, rgba(243,241,237,.62) 33%, rgba(243,241,237,.18) 42%, rgba(243,241,237,0) 48%); }
@@ -1503,3 +1503,61 @@ svg.i { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-widt
 
 /* the brand's black logo is used exactly as supplied: no recolouring, no watermarks, no frame on the alligator */
 .manifesto--croc::before { content: none; }
+
+/* ═════════════ Founder statement on ivory alligator ═════════════ */
+/* the texture is evenly lit and centred on mid grey, so soft-light lays it over the ivory ground edge to edge */
+.manifesto--croc { background: #ECE5D8; color: var(--ink); }
+.manifesto--croc .manifesto__tex { object-position: 50% 50%; mix-blend-mode: soft-light; filter: contrast(1.45); opacity: 1; }
+.manifesto--croc::after { background: radial-gradient(56% 58% at 50% 50%, rgba(236,229,216,.66) 0%, rgba(236,229,216,.28) 60%, rgba(236,229,216,0) 100%); }
+.manifesto__logo { display: block; width: 92px; height: auto; }
+.manifesto--croc .manifesto__text { color: var(--ink); }
+.manifesto--croc .manifesto__sub { color: #4A4245; }
+.manifesto--croc .manifesto__rule { background: var(--champagne-ink); }
+.manifesto--croc .manifesto__quote { color: var(--ink); }
+.manifesto--croc .manifesto__quote cite { color: var(--champagne-ink); }
+.manifesto--croc .manifesto__btn { background: var(--ink); border-color: var(--ink); color: #fff; }
+.manifesto--croc .manifesto__btn:hover { background: #000; border-color: #000; color: #fff; }
+@media (max-width: 720px) { .manifesto__logo { width: 72px; } }
+
+/* ═════════════ Founder statement: alligator photograph beside an ivory panel ═════════════ */
+.founder { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); min-height: clamp(560px, 46vw, 760px); background: #F4EFE7; margin-bottom: clamp(24px, 4vw, 56px); }
+.founder__media { position: relative; overflow: hidden; background: #0D0D0D; }
+.founder__media img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 26%; }
+.founder__panel { display: flex; flex-direction: column; justify-content: center; align-items: flex-start; gap: 22px; padding: clamp(48px, 6vw, 112px) clamp(28px, 6vw, 112px); }
+.founder__panel > * { max-width: 540px; }
+.founder__logo { width: 76px; height: auto; margin-bottom: 6px; }
+.founder__text { margin: 0; font: 400 clamp(30px, 2.7vw, 44px)/1.18 var(--f-display); color: var(--ink); text-wrap: balance; }
+.founder__sub { margin: 0; font-size: 16px; line-height: 1.7; color: var(--ink-2); }
+.founder__rule { width: 48px; height: 1px; margin-top: 8px; background: var(--champagne-ink); }
+.founder__quote { margin: 0; padding: 0; border: 0; font: 600 clamp(19px, 1.55vw, 23px)/1.45 var(--f-display); color: var(--ink); }
+.founder__quote cite { display: block; margin-top: 14px; font: 500 11px/1 var(--f-sans); font-style: normal; letter-spacing: .22em; text-transform: uppercase; color: var(--champagne-ink); }
+.founder__btn { margin-top: 10px; min-height: 56px; padding: 0 34px; background: var(--ink); border-color: var(--ink); color: #fff; }
+.founder__btn:hover { background: #000; border-color: #000; color: #fff; }
+@media (max-width: 900px) {
+  .founder { grid-template-columns: minmax(0, 1fr); min-height: 0; }
+  .founder__media { aspect-ratio: 4 / 3; }
+  .founder__panel { padding: 44px var(--gutter) 56px; }
+}
+@media (max-width: 720px) {
+  .founder__media { aspect-ratio: 1 / 1; }
+  .founder__text { font-size: 28px; }
+  .founder__btn { width: min(100%, 340px); }
+}
+
+/* ═════════════ Categories: four equal still lifes ═════════════ */
+.cats4 { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: clamp(14px, 1.6vw, 24px); }
+.cat4 { display: grid; justify-items: center; gap: 6px; min-width: 0; text-align: center; color: var(--ink); }
+.cat4__img { aspect-ratio: 4 / 5; margin-bottom: 14px; }
+.cat4__img img { object-fit: contain; padding: 12% 10%; }
+.cat4:hover .cat4__img img { transform: scale(1.04); }
+.cat4__name { font-family: var(--f-display); font-size: clamp(22px, 1.9vw, 28px); line-height: 1.15; }
+.cat4__go { display: inline-flex; align-items: center; gap: 8px; font-size: 11.5px; letter-spacing: .14em; text-transform: uppercase; color: var(--ink-2); padding-bottom: 3px; border-bottom: 1px solid transparent; transition: border-color .25s, color .25s; }
+.cat4:hover .cat4__go { color: var(--ink); border-bottom-color: var(--ink); }
+@media (max-width: 900px) {
+  .cats4 { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 28px 14px; }
+  .cat4__img { margin-bottom: 10px; }
+}
+@media (max-width: 720px) {
+  .cat4__name { font-size: 21px; }
+  .cat4__go { font-size: 10.5px; letter-spacing: .12em; }
+}
