@@ -154,7 +154,7 @@
     { href: '#/hermes', id: 75683, label: 'Hermès', tone: 'sand' },
     { href: '#/home-office', id: 72983, label: 'Home & Office', tone: 'mist' }
   ];
-  // "The ones worth collecting" slideshow: one photograph per category, ECJ's own
+  // "Curated pieces" slideshow: one photograph per category, ECJ's own
   const SHOW = [
     { img: 'b-yellow-diamond', href: '#/jewelry/natural-diamonds', pos: '50% 50%', alt: 'A radiant-cut fancy yellow diamond ring with trapezoid side stones' },
     { img: 'b-we-buy-watches', href: '#/watches/daytona', pos: '50% 45%', alt: 'A steel Rolex Cosmograph Daytona presented on a black glove' },
@@ -193,7 +193,7 @@
     </section>
 
     <section class="section2"><div class="wrap" data-note="cats">
-      ${headL('The collection', 'Many Pieces, Chosen Carefully', ['Browse new arrivals', '#/new'])}
+      ${headL('The collection', 'View Pieces', ['Browse new arrivals', '#/new'])}
       <div class="cats4">
         ${STILL.map(t => `<a class="cat4 tile--${t.tone}" href="${t.href}">
           <div class="tile__img cat4__img"><img src="${byId[t.id].imgs[0]}" alt="${esc(fullName(byId[t.id]))}" loading="lazy"></div>
@@ -216,7 +216,7 @@
     </section>
 
     <section class="section2"><div class="wrap editorial2" data-note="editorial">
-      <div class="show" id="show" role="region" aria-roledescription="carousel" aria-label="The ones worth collecting">
+      <div class="show" id="show" role="region" aria-roledescription="carousel" aria-label="Curated pieces">
         <div class="show__stage">
           ${SHOW.map((x, i) => `<a class="show__slide${i ? '' : ' is-on'}" href="${x.href}" aria-hidden="${i ? 'true' : 'false'}" tabindex="${i ? -1 : 0}"><img src="${SRC(x.img)}" alt="${esc(x.alt)}" style="object-position:${x.pos}" loading="lazy"></a>`).join('')}
           <button class="show__arrow show__arrow--prev" data-act="show-step" data-dir="-1" aria-label="Previous photograph">${ARROW}</button>
@@ -227,9 +227,9 @@
         </div>
       </div>
       <div class="editorial__side">
-        <h2 class="h2c">The Ones Worth Collecting</h2>
+        <h2 class="h2c">Curated Pieces</h2>
         <p class="sub">Chosen piece by piece by the ECJ Luxe specialists</p>
-        <a class="btn btn--outline" href="#/new">Shop the edit</a>
+        <a class="btn btn--outline" href="#/new">Shop now</a>
       </div>
     </div></section>
 
@@ -243,12 +243,12 @@
     </div></section>
 
     <section class="section2 section2--ruled"><div class="wrap">
-      ${headL('Just arrived', 'New to the Salon', ['View all new arrivals', '#/new'])}
+      ${headL('Just arrived', 'Latest', ['View all new arrivals', '#/new'])}
       <div class="grid grid--4 grid--home">${[FEATURED].concat(P.filter(p => p !== FEATURED).slice(0, 8)).map((p, i) => card(p, { note: i === 0 ? 'card' : '' })).join('')}</div>
     </div></section>
 
     <section class="section2 worn" data-note="worn"><div class="wrap">
-      ${headL('In the salon', 'Worn, Not Just Collected', null)}
+      ${headL('In the salon', 'Shop Handbags', null)}
       <div class="diptych">
         <a class="diptych__item" href="#/hermes/kelly"><img src="${SRC('b-we-buy-handbags')}" alt="A green Hermès Kelly carried with a yellow gold Rolex Day-Date and a fancy yellow diamond ring" loading="lazy"><span class="diptych__cap"><b>Hermès Kelly, Rolex Day-Date</b><span>Shop Kelly</span></span></a>
         <a class="diptych__item" href="#/hermes/birkin"><img src="${SRC('homepage-accessories')}" alt="An orange Hermès Birkin with gold hardware, carried by hand" loading="lazy"><span class="diptych__cap"><b>Hermès Birkin</b><span>Shop Birkin</span></span></a>
@@ -755,10 +755,10 @@
       { k: 'hero', h: 'A full-width banner', was: 'A slider that took about 8 seconds to load and still showed the Mizner Park store.', now: 'One calm, full-width photograph of a watch worn by a man, in the spirit of ECJ’s Birkin banner. The copy sits on the photograph itself in dark ink over a soft ivory fade, with the two primary actions side by side. On tablets and phones the copy sits just below the photograph.', ref: 'Jewels Aficionado homepage banner' },
       { k: 'cats', h: 'Four categories, given equal weight', was: 'Four identical tiles with small captions.', now: 'Watches, jewelry, Hermès and home & office as four equal still lifes, each catalogue photograph restaged on its own soft backdrop, with the name and a quiet “View pieces” link centred beneath.', ref: 'Jewels Aficionado category row' },
       { k: 'manifesto', h: 'The founder’s word, beside the leather', was: 'A centred heading and a button.', now: 'A full-strength photograph of glossy black alligator beside a quiet ivory panel: the material speaks on one side, the founder on the other, with the black monogram exactly as supplied.', ref: 'Hermès and Cartier editorial splits' },
-      { k: 'editorial', h: 'A slideshow of the ones worth collecting', now: 'Three of ECJ’s own photographs, one for jewelry, watches and Hermès, crossfade on their own. Arrows step through by hand, and the show pauses while the pointer or keyboard focus is on it.', ref: 'Jewels Aficionado “The Ones Worth Collecting”' },
+      { k: 'editorial', h: 'Curated pieces, as a slideshow', now: 'Three of ECJ’s own photographs, one for jewelry, watches and Hermès, crossfade on their own. Arrows step through by hand, and the show pauses while the pointer or keyboard focus is on it.', ref: 'Jewels Aficionado “The Ones Worth Collecting”' },
       { k: 'justin', h: 'Just in', now: 'Pick a piece from the list and the photograph changes, full-bleed in a clean frame, with the reference, year and set beside it.', ref: 'Jewels Aficionado “Just In” feature' },
       { k: 'card', h: 'Image-first product cards', was: 'Long product titles under small thumbnails.', now: 'Cards are mostly image, with a second angle on hover where one exists. Reference and year stay for collectors.' },
-      { k: 'worn', h: 'Worn, not just collected', was: 'ECJ’s lifestyle photography appeared once, as small banners.', now: 'Two of ECJ’s professional lifestyle photographs as a full spread on black. Phone snapshots stay inside product galleries.', ref: 'Jewels Aficionado “Styled by The It Crowd”' },
+      { k: 'worn', h: 'Shop handbags', was: 'ECJ’s lifestyle photography appeared once, as small banners.', now: 'Two of ECJ’s professional lifestyle photographs as a full spread on black. Phone snapshots stay inside product galleries.', ref: 'Jewels Aficionado “Styled by The It Crowd”' },
       { k: 'quotes', h: 'A client’s words, set like a press quote', now: 'One real review, large and centred, instead of a small rotating slider.', ref: 'Jewels Aficionado press quote' },
       { k: 'services', h: 'Salon, selling and sourcing as an editorial spread', was: 'Three photo cards with text laid over a dark gradient.', now: 'The Salon leads at full height; selling and sourcing stack beside it. Captions sit beneath clean photographs, each with a rule, a label, a title and one sentence.', ref: 'Magazine spreads; Jewels Aficionado boutique cards' },
       { k: 'legal', h: 'Legal notices, BBB and ADA', now: 'ECJ’s existing disclaimers carried over word for word, the official BBB Accredited Business seal served live by BBB so the A+ rating stays current, and an accessibility icon linking to the ADA statement.' }
