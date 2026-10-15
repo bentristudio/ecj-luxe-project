@@ -1561,3 +1561,23 @@ svg.i { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-widt
   .cat4__name { font-size: 21px; }
   .cat4__go { font-size: 10.5px; letter-spacing: .12em; }
 }
+
+/* ═════════════ Hero: Cosmograph Daytona on the wrist ═════════════ */
+/* Desktop: the portrait photograph sits to the right and its dark knit sleeve dissolves into a matching charcoal ground,
+   which carries the headline in white. Tablets and phones keep the photograph on top and the copy below on ivory. */
+@media (min-width: 1100px) {
+  .hero5 { --navy: #222124; background: var(--navy); color: #fff; }
+  .hero5__img { left: auto; right: 0; width: 72%; object-position: 50% 49%;
+    -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 18%); mask-image: linear-gradient(90deg, transparent 0, #000 18%); }
+  .hero5__veil { background: linear-gradient(90deg, var(--navy) 0%, rgba(34,33,36,.85) 26%, rgba(34,33,36,0) 46%); }
+  .hero5__eyebrow { color: rgba(255,255,255,.66); }
+  .hero5__title { color: #fff; }
+  .hero5__sub { color: rgba(255,255,255,.8); }
+  .hero5 .btn--ghost { background: #fff; border-color: #fff; color: var(--ink); }
+  .hero5 .btn--ghost:hover { background: transparent; color: #fff; }
+  .hero5 .btn--salon { background: transparent; border-color: rgba(255,255,255,.7); color: #fff; }
+  .hero5 .btn--salon:hover { background: #fff; border-color: #fff; color: var(--ink); }
+}
+@media (max-width: 1099px) {
+  .hero5__img { object-position: 56% 49%; }
+}

@@ -180,7 +180,7 @@
   function homeHTML() {
     return `
     <section class="hero5" data-note="hero">
-      <img class="hero5__img" src="${SRC('hero-datejust')}" width="2400" height="1209" alt="A two-tone Rolex Datejust 41 with a slate Roman numeral dial, worn with a blue shirt">
+      <img class="hero5__img" src="${SRC('hero-daytona-rolesor')}" width="1870" height="2337" alt="A two-tone Rolex Cosmograph Daytona with a white dial, worn with a navy knit sleeve">
       <div class="hero5__veil" aria-hidden="true"></div>
       <div class="hero5__inner">
         <div class="hero5__copy">
@@ -228,7 +228,7 @@
       </div>
       <div class="editorial__side">
         <h2 class="h2c">Curated Pieces</h2>
-        <p class="sub">Chosen piece by piece by the ECJ Luxe specialists</p>
+        <p class="sub">Chosen carefully by the ECJ Luxe team</p>
         <a class="btn btn--outline" href="#/new">Shop now</a>
       </div>
     </div></section>
@@ -752,7 +752,7 @@
   const NOTES = {
     home: [
       { k: 'header', h: 'The official logo, given room', was: 'A small logo wedged between menu items.', now: 'The official ECJ Luxe lockup supplied by the brand anchors a clean white header. When the header condenses on scroll it switches to the official monogram.', ref: 'Cartier and Rolex headers', at: 'tr' },
-      { k: 'hero', h: 'A full-width banner', was: 'A slider that took about 8 seconds to load and still showed the Mizner Park store.', now: 'One calm, full-width photograph of a watch worn by a man, in the spirit of ECJ’s Birkin banner. The copy sits on the photograph itself in dark ink over a soft ivory fade, with the two primary actions side by side. On tablets and phones the copy sits just below the photograph.', ref: 'Jewels Aficionado homepage banner' },
+      { k: 'hero', h: 'A full-width banner', was: 'A slider that took about 8 seconds to load and still showed the Mizner Park store.', now: 'A Rolex Cosmograph Daytona on the wrist, shown large on the right. The dark knit sleeve dissolves into a matching charcoal ground that carries the headline and the two primary actions. On tablets and phones the copy sits just below the photograph.', ref: 'Jewels Aficionado homepage banner' },
       { k: 'cats', h: 'Four categories, given equal weight', was: 'Four identical tiles with small captions.', now: 'Watches, jewelry, Hermès and home & office as four equal still lifes, each catalogue photograph restaged on its own soft backdrop, with the name and a quiet “View pieces” link centred beneath.', ref: 'Jewels Aficionado category row' },
       { k: 'manifesto', h: 'The founder’s word, beside the leather', was: 'A centred heading and a button.', now: 'A full-strength photograph of glossy black alligator beside a quiet ivory panel: the material speaks on one side, the founder on the other, with the black monogram exactly as supplied.', ref: 'Hermès and Cartier editorial splits' },
       { k: 'editorial', h: 'Curated pieces, as a slideshow', now: 'Three of ECJ’s own photographs, one for jewelry, watches and Hermès, crossfade on their own. Arrows step through by hand, and the show pauses while the pointer or keyboard focus is on it.', ref: 'Jewels Aficionado “The Ones Worth Collecting”' },
