@@ -458,10 +458,7 @@ svg.i { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-widt
 .footer__sign span { font-family: var(--f-display); font-weight: 700; font-size: min(10.5vw, 150px); line-height: .8; letter-spacing: .08em; margin-right: -.08em; white-space: nowrap; font-variation-settings: "opsz" 96; }
 
 /* brand devices */
-.emblem { position: absolute; pointer-events: none; color: rgba(255,255,255,.05); width: min(64vw, 940px); height: auto; left: -5vw; bottom: -10%; }
-.emblem--hero { width: min(52vw, 760px); left: -8vw; bottom: -14%; }
 .salon-hero__copy { position: relative; overflow: hidden; }
-.salon-hero__copy > :not(.emblem) { position: relative; }
 .seal { position: absolute; z-index: 3; color: var(--accent); filter: drop-shadow(0 8px 16px rgba(28,21,23,.16)); }
 .seal--stage { top: clamp(14px, 2vw, 24px); left: clamp(14px, 2vw, 24px); width: clamp(72px, 7vw, 96px); height: clamp(72px, 7vw, 96px); }
 .seal--gallery { left: 16px; bottom: 16px; width: 92px; height: 92px; pointer-events: none; }
@@ -1025,13 +1022,11 @@ svg.i { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-widt
 .is-scrolled .header__bar { min-height: 66px; }
 .is-scrolled .header .logo__img { opacity: 0; height: 40px; }
 .is-scrolled .header .logo__mono { opacity: 1; }
-.logo__img--light { filter: brightness(0) invert(1); }
 .footer__brand .logo { justify-content: flex-start; }
 .footer__brand .logo__img { height: auto; width: 190px; }
 .logo--drawer .logo__img { height: 56px; }
 .footer__sign { display: flex; justify-content: center; padding-block: clamp(36px, 5vw, 64px); border-top: 1px solid rgba(255,255,255,.14); }
 .footer__sign img { display: block; width: min(64vw, 500px); height: auto; }
-.emblem { filter: brightness(0) invert(1); opacity: .06; color: inherit; }
 .bbb { background: #fff; padding: 5px 7px; border-radius: 4px; }  /* the official seal's rating panel is transparent with dark text */
 .bbb img, .bbb__img { display: block; width: 176px; height: auto; }
 .hero2 { height: clamp(560px, calc(100vh - 230px), 860px); }
@@ -1061,7 +1056,6 @@ svg.i { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-widt
 .salon-facts { border-top-color: rgba(20,18,19,.15); }
 .salon-facts > div + div { border-left-color: rgba(20,18,19,.15); }
 .salon-hero .crumbs, .salon-hero .crumbs a { color: var(--ink-2); }
-.emblem { filter: brightness(0); opacity: .07; }
 .booker--light .chip[aria-pressed="true"], .booker--light .day[aria-pressed="true"], .booker--light .time[aria-pressed="true"] { background: var(--diamond); color: var(--ink); border-color: var(--accent); }
 .booker__done { border-color: var(--diamond-2); }
 .success__mark { background: var(--diamond); color: var(--ink); }
@@ -1106,7 +1100,6 @@ svg.i { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-widt
 .manifesto { padding-block: clamp(32px, 5vw, 72px) clamp(56px, 7vw, 104px); }
 .manifesto__grid { display: grid; grid-template-columns: minmax(0, 8fr) minmax(0, 4fr); gap: clamp(32px, 6vw, 96px); align-items: end; }
 .manifesto__main { display: grid; gap: 26px; }
-.manifesto__mark { width: 64px; height: auto; }
 .manifesto__text { margin: 0; font-family: var(--f-display); font-size: clamp(32px, 3.8vw, 60px); line-height: 1.12; letter-spacing: -.01em; text-wrap: balance; }
 .manifesto__text em { color: var(--champagne-ink); }
 .manifesto__side { display: grid; gap: 22px; justify-items: start; padding-bottom: 8px; }
@@ -1237,7 +1230,6 @@ svg.i { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-widt
 .manifesto__tex { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: -2; mix-blend-mode: overlay; filter: grayscale(1) brightness(.62) contrast(4); }
 .manifesto--croc::after { content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
   background: radial-gradient(110% 90% at 28% 35%, rgba(255,255,255,.06), transparent 55%), linear-gradient(0deg, rgba(4,16,12,.35), rgba(4,16,12,.1)); }
-.manifesto--croc .manifesto__mark { filter: brightness(0) invert(1); }
 .manifesto--croc .manifesto__text { color: #fff; }
 .manifesto--croc .manifesto__side > p { color: rgba(255,255,255,.84); }
 .manifesto--croc .manifesto__side blockquote { border-left-color: var(--champagne); color: #fff; }
@@ -1432,9 +1424,6 @@ svg.i { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-widt
 .manifesto--croc::after { background: radial-gradient(62% 58% at 50% 50%, rgba(5,20,14,.7) 0%, rgba(5,20,14,.34) 64%, rgba(5,20,14,.5) 100%); }
 .manifesto--croc::before { content: ""; position: absolute; inset: clamp(12px, 1.6vw, 22px); z-index: 0; pointer-events: none; border: 1px dashed rgba(220,199,162,.45); }
 .manifesto__inner { position: relative; z-index: 1; display: grid; justify-items: center; gap: 20px; max-width: 1000px; }
-.manifesto--croc .manifesto__mark { display: block; width: 88px; aspect-ratio: 1269 / 719; filter: none;
-  -webkit-mask: var(--logo) center / contain no-repeat; mask: var(--logo) center / contain no-repeat;
-  background: linear-gradient(115deg, #A97F3E 0%, #F3E1B4 34%, #C59C57 52%, #F6E7C1 70%, #A47A3A 100%); }
 .manifesto--croc .manifesto__text { margin: 10px 0 0; max-width: 28ch; color: #F6F1E7; font-size: clamp(30px, 3.3vw, 50px); line-height: 1.16; text-wrap: balance; }
 .manifesto__sub { margin: 0; max-width: 54ch; font-size: 16px; line-height: 1.7; color: rgba(246,241,231,.76); }
 .manifesto__rule { width: 56px; height: 1px; margin-top: 12px; background: var(--champagne); }
@@ -1445,7 +1434,6 @@ svg.i { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-widt
 @media (max-width: 720px) {
   .manifesto--croc { padding-block: 72px 80px; }
   .manifesto__inner { gap: 16px; padding-inline: 30px; }
-  .manifesto--croc .manifesto__mark { width: 68px; }
   .manifesto--croc .manifesto__text { font-size: 28px; }
   .manifesto__sub { font-size: 15px; }
   .manifesto__quote { font-size: 19px; }
@@ -1512,3 +1500,6 @@ svg.i { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-widt
 /* client quote: upright and bold, set like the founder's words */
 .quote2 blockquote { font-style: normal; font-weight: 600; font-size: clamp(26px, 2.8vw, 40px); line-height: 1.3; letter-spacing: 0; max-width: 30ch; }
 .quote2 cite { color: var(--champagne-ink); }
+
+/* the brand's black logo is used exactly as supplied: no recolouring, no watermarks, no frame on the alligator */
+.manifesto--croc::before { content: none; }

@@ -54,7 +54,7 @@
     jewelry: { title: 'Jewelry', intro: 'Signed pieces from Van Cleef & Arpels, Cartier and Hermès, and natural diamonds set in 18k gold.', facets: ['brand', 'type', 'metal', 'cond', 'price'], chips: 'type' },
     hermes: { title: 'Hermès', intro: 'Birkin and Kelly, unworn and pre-owned. The date stamp, leather, hardware and everything included is listed on every bag.', facets: ['family', 'cond', 'hardware', 'leather', 'price'], chips: 'family' },
     'home-office': { title: 'Home & Office', intro: 'Buben & Zorweg watch winders and safes, Berd Vaye sculpture, Montegrappa pens and Lalique crystal.', facets: ['brand', 'type', 'price'], chips: null },
-    new: { title: 'New arrivals', intro: 'The latest pieces to arrive at the salon, newest first. New arrivals reach the private list before they are listed here.', facets: ['catLabel', 'brand', 'cond', 'price'], chips: 'catLabel' },
+    new: { title: 'New arrivals', intro: 'The latest pieces to arrive at the salon, newest first. Sign up at the foot of the page to hear about them as they are listed.', facets: ['catLabel', 'brand', 'cond', 'price'], chips: 'catLabel' },
     saved: { title: 'Saved pieces', intro: 'Pieces you have saved on this device. Mention them when you book a viewing and they will be ready when you arrive.', facets: [], chips: null },
     maison: { title: '', intro: '', facets: ['catLabel', 'price'], chips: null }
   };
@@ -158,7 +158,7 @@
   const SHOW = [
     { img: 'b-yellow-diamond', href: '#/jewelry/natural-diamonds', pos: '50% 50%', alt: 'A radiant-cut fancy yellow diamond ring with trapezoid side stones' },
     { img: 'b-we-buy-watches', href: '#/watches/daytona', pos: '50% 45%', alt: 'A steel Rolex Cosmograph Daytona presented on a black glove' },
-    { img: 'b-handbags', href: '#/hermes', pos: '54% 50%', alt: 'A Hermès Himalaya Birkin carried in the street' }
+    { img: 'hermes-birkin', href: '#/hermes', pos: '55% 50%', alt: 'A two-tone cream and tan Hermès Birkin with gold hardware, carried in the street' }
   ];
   const JUSTIN = [75624, 75651, 75638, 70101].map(id => byId[id]);
   const FEATURED = byId[75638]; // platinum Daytona, ice-blue dial: its photo fills a double-size frame
@@ -187,30 +187,31 @@
           <span class="label hero5__eyebrow">Family owned since 1986 · Boca Raton</span>
           <h1 class="hero5__title">Rare Watches, Jewelry &amp; Hermès, Shown in Private</h1>
           <p class="hero5__sub">Pre-owned and unworn pieces, authenticated in&#8209;house and shown by appointment.</p>
-          <div class="hero5__ctas"><a class="btn btn--hero btn--ghost" href="#/new">Shop new arrivals</a><a class="btn btn--hero btn--salon" href="#/salon">Book a private viewing</a></div>
+          <div class="hero5__ctas"><a class="btn btn--hero btn--ghost" href="#/new">Shop now</a><a class="btn btn--hero btn--salon" href="#/salon">Book a private viewing</a></div>
         </div>
       </div>
     </section>
 
     <section class="section2"><div class="wrap" data-note="cats">
       ${headL('The collection', 'Many Pieces, Chosen Carefully', ['Browse new arrivals', '#/new'])}
-      <div class="mosaic">
-        ${STILL.map((t, i) => `<a class="mtile mtile--${i} tile--${t.tone}" href="${t.href}">
-          <div class="tile__img"><img src="${byId[t.id].imgs[0]}" alt="${esc(fullName(byId[t.id]))}" loading="lazy"></div>
-          <span class="mtile__cap"><span class="mtile__name">${esc(t.label)}</span><span class="mtile__go">Shop ${ARROW}</span></span>
+      <div class="cats4">
+        ${STILL.map(t => `<a class="cat4 tile--${t.tone}" href="${t.href}">
+          <div class="tile__img cat4__img"><img src="${byId[t.id].imgs[0]}" alt="${esc(fullName(byId[t.id]))}" loading="lazy"></div>
+          <span class="cat4__name">${esc(t.label)}</span>
+          <span class="cat4__go">View pieces ${ARROW}</span>
         </a>`).join('')}
       </div>
     </div></section>
 
-    <section class="manifesto manifesto--croc" data-note="manifesto">
-      <img class="manifesto__tex" src="${SRC('tex-croc')}" alt="" aria-hidden="true">
-      <div class="wrap manifesto__inner">
-        <span class="manifesto__mark" style="--logo:url('${SRC('logo-mono.png')}')" aria-hidden="true"></span>
-        <p class="manifesto__text">Forty years of relationships in fine watches and jewelry, now in a private salon in Boca Raton.</p>
-        <p class="manifesto__sub">Rare references, signed jewels and Hermès icons, each authenticated in&#8209;house and shown by appointment at 201-299 Via De Palmas.</p>
-        <span class="manifesto__rule" aria-hidden="true"></span>
-        <blockquote class="manifesto__quote">“Our brand has always been about offering a luxury experience that exceeds expectations.”<cite>Bobby Yampolsky, Founder</cite></blockquote>
-        <a class="btn manifesto__btn" href="#/watches">Explore the collection</a>
+    <section class="founder" data-note="manifesto">
+      <div class="founder__media"><img src="${SRC('leather-croc')}" alt="Glossy black alligator leather, close up" loading="lazy"></div>
+      <div class="founder__panel">
+        <img class="founder__logo" src="${SRC('logo-mono.png')}" alt="ECJ Luxe" width="1269" height="719">
+        <p class="founder__text">Forty years of relationships in fine watches and jewelry, now in a private salon in Boca Raton.</p>
+        <p class="founder__sub">Rare references, signed jewels and Hermès icons, each authenticated in&#8209;house and shown by appointment at 201-299 Via De Palmas.</p>
+        <span class="founder__rule" aria-hidden="true"></span>
+        <blockquote class="founder__quote">“Our brand has always been about offering a luxury experience that exceeds expectations.”<cite>Bobby Yampolsky, Founder</cite></blockquote>
+        <a class="btn founder__btn" href="#/watches">Explore the collection</a>
       </div>
     </section>
 
@@ -609,7 +610,7 @@
   function salonHTML() {
     return `
     <section class="salon-hero" data-note="salon-hero">
-      <div class="salon-hero__copy"><img class="emblem emblem--hero" src="${SRC('logo-mono.png')}" alt="">
+      <div class="salon-hero__copy">
         <nav class="crumbs" aria-label="Breadcrumb"><a href="#/">Home</a><span aria-hidden="true">/</span><span>The salon</span></nav>
         <span class="label">By appointment · Royal Palm Plaza</span>
         <h1 class="d-l">A private showroom for watches, diamonds and Hermès.</h1>
@@ -750,11 +751,10 @@
   /* ───────── Design notes ───────── */
   const NOTES = {
     home: [
-      { k: 'utility', h: 'A black top bar, as on Jewels Aficionado', was: 'An orange “ECJ Luxe Collection Has Moved” banner.', now: 'The authentication promise, the new address and a booking link sit quietly on every page.', ref: 'Jewels Aficionado, Cartier' },
       { k: 'header', h: 'The official logo, given room', was: 'A small logo wedged between menu items.', now: 'The official ECJ Luxe lockup supplied by the brand anchors a clean white header. When the header condenses on scroll it switches to the official monogram.', ref: 'Cartier and Rolex headers', at: 'tr' },
       { k: 'hero', h: 'A full-width banner', was: 'A slider that took about 8 seconds to load and still showed the Mizner Park store.', now: 'One calm, full-width photograph of a watch worn by a man, in the spirit of ECJ’s Birkin banner. The copy sits on the photograph itself in dark ink over a soft ivory fade, with the two primary actions side by side. On tablets and phones the copy sits just below the photograph.', ref: 'Jewels Aficionado homepage banner' },
-      { k: 'cats', h: 'An editorial mosaic, not four equal squares', was: 'Four identical tiles with small captions.', now: 'Watches lead at double size. The catalogue photos are restaged on sage, blush, sand and mist backdrops, so each category reads like a styled shoot, with an index-style caption.', ref: 'Jewels Aficionado category tiles; magazine contents pages' },
-      { k: 'manifesto', h: 'The founder’s word, on alligator', was: 'A centred heading and a button.', now: 'The statement and the founder’s words set on glossy alligator leather tinted deep emerald, with the monogram in champagne gold foil and a hairline frame that recalls saddle stitching.', ref: 'Hermès alligator leather goods' },
+      { k: 'cats', h: 'Four categories, given equal weight', was: 'Four identical tiles with small captions.', now: 'Watches, jewelry, Hermès and home & office as four equal still lifes, each catalogue photograph restaged on its own soft backdrop, with the name and a quiet “View pieces” link centred beneath.', ref: 'Jewels Aficionado category row' },
+      { k: 'manifesto', h: 'The founder’s word, beside the leather', was: 'A centred heading and a button.', now: 'A full-strength photograph of glossy black alligator beside a quiet ivory panel: the material speaks on one side, the founder on the other, with the black monogram exactly as supplied.', ref: 'Hermès and Cartier editorial splits' },
       { k: 'editorial', h: 'A slideshow of the ones worth collecting', now: 'Three of ECJ’s own photographs, one for jewelry, watches and Hermès, crossfade on their own. Arrows step through by hand, and the show pauses while the pointer or keyboard focus is on it.', ref: 'Jewels Aficionado “The Ones Worth Collecting”' },
       { k: 'justin', h: 'Just in', now: 'Pick a piece from the list and the photograph changes, full-bleed in a clean frame, with the reference, year and set beside it.', ref: 'Jewels Aficionado “Just In” feature' },
       { k: 'card', h: 'Image-first product cards', was: 'Long product titles under small thumbnails.', now: 'Cards are mostly image, with a second angle on hover where one exists. Reference and year stay for collectors.' },
@@ -796,7 +796,7 @@
     const isHome = state.view === 'home';
     return `<p class="notes-intro">Redesign concept for ECJ Luxe Collection. Each number marks a change on this page and the leading sites that informed it. Press <b>N</b> to show or hide.</p>
       ${isHome ? `<figure class="notes-before"><img src="${SRC('before-home')}" alt="The current ecjluxe.com homepage"><figcaption>Before: ecjluxe.com today, at 1440px after the slider loads.</figcaption></figure>
-      <div class="n-item" style="grid-template-columns:minmax(0,1fr)"><div><h4>Direction after the client review</h4><p>The first concept felt generic. This version is led by photography, taking cues from Jewels Aficionado: full-bleed images, styled still lifes, centred serif headings and a quiet black-and-white frame.</p><p>Product and banner photography is ECJ’s own. The homepage banner and the alligator texture are free-licence Unsplash photographs, to be replaced with ECJ shots if they prefer.</p></div></div>` : ''}
+      <div class="n-item" style="grid-template-columns:minmax(0,1fr)"><div><h4>Direction after the client review</h4><p>The first concept felt generic. This version is led by photography, taking cues from Jewels Aficionado: full-bleed images, styled still lifes, centred serif headings and a quiet black-and-white frame.</p><p>Product and banner photography is ECJ’s own. The homepage banner, the alligator leather and the Birkin in the slideshow are free-licence Unsplash and Pexels photographs, to be replaced with ECJ shots if they prefer.</p></div></div>` : ''}
       ${list.map((n, i) => `<div class="n-item" id="note-${n.k}"><span class="n-item__num">${i + 1}</span><div><h4>${esc(n.h)}</h4>${n.was ? `<p class="n-was"><b>Before:</b> ${esc(n.was)}</p>` : ''}<p>${esc(n.now)}</p>${n.ref ? `<p class="n-ref">Reference: ${esc(n.ref)}</p>` : ''}<button data-act="note-go" data-k="${n.k}">Show on page</button></div></div>`).join('')}
       <p class="notes-intro" style="margin-top:20px;font-size:12.5px">Prototype built with 30 pieces from ECJ’s live inventory on 12 October 2026.</p>`;
   }
@@ -1066,7 +1066,7 @@
   document.addEventListener('submit', e => {
     const f = e.target; e.preventDefault();
     const kind = f.dataset.form;
-    if (kind === 'subscribe') { f.reset(); toast('You are on the private list.'); }
+    if (kind === 'subscribe') { f.reset(); toast('Thank you. You will hear about new arrivals as they are listed.'); }
     if (kind === 'booking') {
       if (f.dataset.mode === 'band') { state.scrollTo = '#book'; go('/salon'); }
       else { state.booking.done = true; refreshBookers(); toast('Viewing requested'); }
