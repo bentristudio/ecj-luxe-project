@@ -54,14 +54,14 @@
     jewelry: { title: 'Jewelry', intro: 'Signed pieces from Van Cleef & Arpels, Cartier and Hermès, and natural diamonds set in 18k gold.', facets: ['brand', 'type', 'metal', 'cond', 'price'], chips: 'type' },
     hermes: { title: 'Hermès', intro: 'Birkin and Kelly, unworn and pre-owned. The date stamp, leather, hardware and everything included is listed on every bag.', facets: ['family', 'cond', 'hardware', 'leather', 'price'], chips: 'family' },
     'home-office': { title: 'Home & Office', intro: 'Buben & Zorweg watch winders and safes, Berd Vaye sculpture, Montegrappa pens and Lalique crystal.', facets: ['brand', 'type', 'price'], chips: null },
-    new: { title: 'New arrivals', intro: 'The latest pieces to arrive at the salon, newest first. Sign up at the foot of the page to hear about them as they are listed.', facets: ['catLabel', 'brand', 'cond', 'price'], chips: 'catLabel' },
+    new: { title: 'New arrivals', intro: 'The newest arrivals to ECJ Luxe, with inventory being updated regularly.', facets: ['catLabel', 'brand', 'cond', 'price'], chips: 'catLabel' },
     saved: { title: 'Saved pieces', intro: 'Pieces you have saved on this device. Mention them when you book a viewing and they will be ready when you arrive.', facets: [], chips: null },
     maison: { title: '', intro: '', facets: ['catLabel', 'price'], chips: null }
   };
   const SPECIAL = { unworn: ['cond', 'Unworn'], 'full-set': ['setGroup', 'With original box'], 'under-20k': ['price', PRICE_ORDER[0]], exotic: ['leather', 'Exotic'] };
   const SPECIAL_TITLE = { unworn: 'Unworn', 'full-set': 'Box & papers', 'under-20k': 'Under $20,000', exotic: 'Exotic leathers' };
   const PROMOS = {
-    watches: { label: 'Sell · Trade', h: 'Have a watch to sell or trade?', p: 'Send a few photos. A specialist replies with an offer based on this week’s market.', cta: 'Start an offer', href: '#/sell', cat: 'Watch' },
+    watches: { label: 'Sell · Trade', h: 'Have a watch to sell or trade?', p: 'Send a few photos. A specialist will reply within the next business day.', cta: 'Start an offer', href: '#/sell', cat: 'Watch' },
     hermes: { label: 'Sell · Trade', h: 'Selling a Birkin or Kelly?', p: 'Unworn bags from the last three years command the highest premiums. Find out what yours is worth.', cta: 'Value my bag', href: '#/sell', cat: 'Hermès bag' },
     jewelry: { label: 'Sourcing', h: 'Looking for one piece in particular?', p: 'Tell us the maison, the size or the stone. We find hard-to-get pieces through relationships built over forty years.', cta: 'Ask us to source it', href: '#/salon', interest: 'Sourcing a piece' }
   };
@@ -193,7 +193,7 @@
     </section>
 
     <section class="section2"><div class="wrap" data-note="cats">
-      ${headL('The collection', 'View Pieces', ['Browse new arrivals', '#/new'])}
+      ${headL('The collection', 'ECJ Luxe Inventory', ['View pieces', '#/new'])}
       <div class="cats4">
         ${STILL.map(t => `<a class="cat4 tile--${t.tone}" href="${t.href}">
           <div class="tile__img cat4__img"><img src="${byId[t.id].imgs[0]}" alt="${esc(fullName(byId[t.id]))}" loading="lazy"></div>
@@ -277,7 +277,7 @@
           <div class="svc__text">
             <span class="label">Watches · Hermès · Diamonds</span>
             <h3><a href="#/sell">Sell or Trade</a></h3>
-            <p>Send a few photos and a specialist replies with an offer based on this week’s market.</p>
+            <p>Send a few photos and a specialist will reply within the next business day.</p>
             <a class="link" href="#/sell">Start an offer ${ARROW}</a>
           </div>
         </article>
