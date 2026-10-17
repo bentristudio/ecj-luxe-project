@@ -1581,3 +1581,28 @@ svg.i { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-widt
 @media (max-width: 1099px) {
   .hero5__img { object-position: 56% 49%; }
 }
+
+/* ═════════════ No italics anywhere: quotes and emphasis are set upright ═════════════ */
+*, *::before, *::after { font-style: normal !important; }
+.move blockquote, .source-band blockquote { font-weight: 600; }
+
+/* ═════════════ About us ═════════════ */
+.about { padding-bottom: clamp(56px, 7vw, 104px); }
+.about__hero { display: grid; grid-template-columns: minmax(0, 6fr) minmax(0, 5fr); gap: clamp(32px, 6vw, 96px); align-items: center; padding-block: clamp(16px, 2vw, 32px) clamp(48px, 6vw, 88px); }
+.about__hero-text { display: grid; gap: 20px; justify-items: start; }
+.about__hero img { display: block; width: 100%; aspect-ratio: 4 / 3; object-fit: cover; }
+.about__pillars { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(24px, 3vw, 48px); padding-block: clamp(36px, 4vw, 56px) clamp(48px, 6vw, 80px); border-top: 1px solid var(--ink); }
+.about__pillar h2 { margin: 0 0 10px; font: 600 clamp(22px, 1.8vw, 26px)/1.2 var(--f-display); }
+.about__pillar p { margin: 0; color: var(--ink-2); font-size: 15.5px; line-height: 1.7; }
+.about__quote { padding-block: clamp(48px, 6vw, 88px); text-align: center; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); }
+.about__quote blockquote { margin: 0 auto; max-width: 30ch; font: 600 clamp(24px, 2.4vw, 36px)/1.35 var(--f-display); color: var(--ink); text-wrap: balance; }
+.about__quote cite { display: block; margin-top: 18px; font: 500 11px/1 var(--f-sans); letter-spacing: .22em; text-transform: uppercase; color: var(--champagne-ink); }
+.about__story { display: grid; grid-template-columns: minmax(0, 4fr) minmax(0, 7fr); gap: clamp(24px, 5vw, 80px); padding-top: clamp(48px, 6vw, 88px); }
+.about__story > div:first-child { display: grid; gap: 14px; align-content: start; }
+.about__story p { margin: 0 0 16px; max-width: 62ch; font-size: 17px; line-height: 1.75; color: var(--ink-2); }
+.about__cta { display: flex; flex-wrap: wrap; align-items: center; gap: 16px 28px; margin-top: 28px; font-size: 14px; color: var(--ink-2); }
+.about .btn:hover { background: #000; border-color: #000; }
+@media (max-width: 900px) {
+  .about__hero, .about__story { grid-template-columns: minmax(0, 1fr); }
+  .about__pillars { grid-template-columns: minmax(0, 1fr); }
+}

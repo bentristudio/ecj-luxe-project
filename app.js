@@ -659,6 +659,40 @@
     </div></section>`;
   }
 
+  /* ───────── ABOUT ───────── */
+  function aboutHTML() {
+    return `<div class="wrap about">
+      ${crumbs([['Home', '#/'], ['About us']])}
+      <section class="about__hero">
+        <div class="about__hero-text">
+          <span class="label">About us</span>
+          <h1 class="d-l">Family owned since 1986</h1>
+          <p class="lede">ECJ Luxe Collection is South Florida’s destination for luxury timepieces, fine jewelry, Hermès and rare collectibles. Founded by Bobby Yampolsky, the house has spent forty years building relationships with clients, collectors and friends.</p>
+        </div>
+        <img src="${SRC('b-rolex-display')}" alt="Rolex Submariner and GMT-Master watches on a glass display" loading="lazy">
+      </section>
+
+      <section class="about__pillars" aria-label="What we do">
+        <div class="about__pillar"><h2>Buy, sell and trade</h2><p>Pre-owned and unworn watches, diamonds, fine jewelry and Hermès. We buy, sell, trade and consign, and a specialist will reply within the next business day.</p></div>
+        <div class="about__pillar"><h2>Authenticated in-house</h2><p>Every piece is examined by our specialists before it is offered, and each one comes with the two-year ECJ Luxe warranty.</p></div>
+        <div class="about__pillar"><h2>Shown in private</h2><p>Clients are received by appointment at 201-299 Via De Palmas, Boca Raton, and every visit is prepared around what you would like to see.</p></div>
+      </section>
+
+      <section class="about__quote">
+        <blockquote>“Our brand has always been about offering a luxury experience that exceeds expectations.”<cite>Bobby Yampolsky, Founder</cite></blockquote>
+      </section>
+
+      <section class="about__story">
+        <div><span class="label">Our story</span><h2 class="d-m">From Mizner Park to a private salon</h2></div>
+        <div>
+          <p>For more than eleven years ECJ Luxe was a fixture of Mizner Park. The house now receives clients in an appointment-only private showroom, a quieter and more discreet setting that suits the way our clients like to buy: privately, with time and attention.</p>
+          <p>The showroom continues to present rare timepieces, exceptional diamonds, fine jewelry, Hermès handbags and curated pieces for the home and office. ECJ Luxe is an authorized dealer for Casio G-Shock and a retailer of Buben &amp; Zörweg and Lalique. Plans for a new ECJ Luxe flagship are underway and will be announced soon.</p>
+          <div class="about__cta"><a class="btn" href="#/salon">Book a private viewing</a><span>${PHONE} · info@ecjluxe.com · Monday–Friday, 11am–5pm</span></div>
+        </div>
+      </section>
+    </div>`;
+  }
+
   /* ───────── ACCESSIBILITY ───────── */
   function accessibilityHTML() {
     return `<div class="wrap access">
@@ -849,6 +883,7 @@
     else if (parts[0] === 'sell') { html = sellHTML(); view = 'sell'; }
     else if (parts[0] === 'salon') { html = salonHTML(); view = 'salon'; }
     else if (parts[0] === 'accessibility') { html = accessibilityHTML(); view = 'access'; }
+    else if (parts[0] === 'about') { html = aboutHTML(); view = 'about'; }
     else if (CATS[parts[0]]) { html = collectionHTML(parts[0], parts[1]); view = 'collection'; }
     else html = homeHTML();
     state.view = view;
@@ -861,7 +896,7 @@
     const target = state.scrollTo; state.scrollTo = null;
     if (target && $(target)) setTimeout(() => $(target).scrollIntoView({ behavior: REDUCED ? 'auto' : 'smooth', block: 'start' }), 30);
     else window.scrollTo({ top: 0, behavior: 'instant' });
-    try { document.title = ({ home: 'ECJ Luxe Redesign', piece: parts[1] && byId[parts[1]] ? fullName(byId[parts[1]]) + ' · ECJ Luxe Redesign' : '', sell: 'Sell & Trade · ECJ Luxe Redesign', salon: 'The Salon · ECJ Luxe Redesign', access: 'Accessibility · ECJ Luxe Redesign', collection: (CATS[parts[0]] && CATS[parts[0]].title || 'Maison') + ' · ECJ Luxe Redesign' })[view]; } catch (e) { /* viewer may lock the title */ }
+    try { document.title = ({ home: 'ECJ Luxe Redesign', piece: parts[1] && byId[parts[1]] ? fullName(byId[parts[1]]) + ' · ECJ Luxe Redesign' : '', sell: 'Sell & Trade · ECJ Luxe Redesign', salon: 'The Salon · ECJ Luxe Redesign', access: 'Accessibility · ECJ Luxe Redesign', about: 'About Us · ECJ Luxe Redesign', collection: (CATS[parts[0]] && CATS[parts[0]].title || 'Maison') + ' · ECJ Luxe Redesign' })[view]; } catch (e) { /* viewer may lock the title */ }
     placePinsSoon();
   }
 
