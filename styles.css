@@ -1606,3 +1606,10 @@ svg.i { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-widt
   .about__hero, .about__story { grid-template-columns: minmax(0, 1fr); }
   .about__pillars { grid-template-columns: minmax(0, 1fr); }
 }
+
+/* ═════════════ Full catalogue: sold pieces and paging ═════════════ */
+.card--sold .plate-img img { opacity: .55; filter: grayscale(.35); }
+.card--sold .card__price { color: var(--ink-3); letter-spacing: .04em; }
+.badge--sold { background: var(--ink); color: #fff; }
+.grid-more { display: flex; justify-content: center; margin-top: clamp(28px, 4vw, 48px); }
+.grid-more:empty { display: none; }

@@ -3,7 +3,33 @@
   'use strict';
 
   const D = window.ECJ, P = D.products;
+  // The full ECJ Luxe catalogue (available and sold) joins the curated pieces, which keep their own photography and notes.
+  const CATALOGUE = window.ECJ_CATALOGUE;
+  if (CATALOGUE && CATALOGUE.items) {
+    const curated = new Map(P.map(p => [p.id, p]));
+    const url = (path, thumb) => CATALOGUE.base + (thumb ? path.replace(/(\.\w+)$/, '-500x500$1') : path);
+    CATALOGUE.items.forEach(x => {
+      const known = curated.get(x.i);
+      if (known) { // keep the curated record, but file it the way the catalogue does
+        known.sold = !!x.s; known.isNew = !!x.a;
+        if (x.c === 'home-office' || x.c === 'apparel') { known.type = x.t; known.brand = x.b; }
+        return;
+      }
+      P.push({
+        id: x.i, cat: x.c, brand: x.b, model: x.n, line: x.t || x.f || '', ref: x.r, price: x.p || 0, cond: x.k,
+        type: x.t, family: x.f, metal: x.m, size: x.z, sold: !!x.s, isNew: !!x.a, remote: true,
+        exotic: /alligator|crocodile|ostrich|lizard|niloticus|porosus/i.test(x.n),
+        imgs: x.g.map(g => url(g)), thumbs: x.g.slice(0, 2).map((g, i) => url(g, (x.q || 0) >> i & 1)),
+        specs: x.d || [], note: x.x, badges: x.s ? ['Sold'] : []
+      });
+    });
+    P.sort((a, b) => (a.sold - b.sold) || b.id - a.id);
+  }
+  P.forEach(p => { p.sold = !!p.sold; });
+  // without the catalogue (the hosted preview) there is no apparel to show, so its links come out
+  if (!(CATALOGUE && CATALOGUE.items)) document.querySelectorAll('a[href="#/apparel"]').forEach(a => (a.closest('li') || a).remove());
   const byId = Object.fromEntries(P.map(p => [p.id, p]));
+  const available = () => P.filter(p => !p.sold);
   const $ = (s, el = document) => el.querySelector(s);
   const $$ = (s, el = document) => Array.from(el.querySelectorAll(s));
   const money = n => '$' + Math.round(n).toLocaleString('en-US');
@@ -33,30 +59,32 @@
   };
 
   /* ───────── Category & facet config ───────── */
-  const CAT_NAME = { watches: 'Watches', jewelry: 'Jewelry', hermes: 'Hermès', 'home-office': 'Home & Office' };
-  const PRICE_ORDER = ['Under $20,000', '$20,000 – $50,000', '$50,000 – $100,000', '$100,000 and above'];
+  const CAT_NAME = { watches: 'Watches', jewelry: 'Jewelry', hermes: 'Hermès', 'home-office': 'Home & Office', apparel: 'Apparel' };
+  const PRICE_ORDER = ['Under $20,000', '$20,000 – $50,000', '$50,000 – $100,000', '$100,000 and above', 'Price on request'];
   const SIZE_ORDER = ['34mm and under', '35–39mm', '40mm and over'];
   const FACETS = {
+    avail: { label: 'Availability', order: ['Available', 'Sold'], get: p => p.sold ? 'Sold' : 'Available' },
     brand: { label: 'Maison', get: p => p.brand },
     family: { label: 'Model', get: p => p.family },
     type: { label: 'Type', get: p => p.type },
     cond: { label: 'Condition', get: p => p.cond },
-    setGroup: { label: 'Box & papers', get: p => /^(Box|Full)/.test(p.set || '') ? 'With original box' : 'Card or papers only' },
+    setGroup: { label: 'Box & papers', get: p => !p.set ? null : /^(Box|Full)/.test(p.set) ? 'With original box' : 'Card or papers only' },
     metal: { label: 'Metal', get: p => p.metal },
     hardware: { label: 'Hardware', get: p => p.metal },
-    leather: { label: 'Leather', get: p => (p.badges || []).includes('Exotic') ? 'Exotic' : 'Calfskin' },
+    leather: { label: 'Leather', get: p => (p.badges || []).includes('Exotic') || p.exotic ? 'Exotic' : 'Calfskin' },
     sizeBucket: { label: 'Case size', order: SIZE_ORDER, get: p => { const n = parseFloat(p.size); if (!n) return null; return n < 35 ? SIZE_ORDER[0] : n < 40 ? SIZE_ORDER[1] : SIZE_ORDER[2]; } },
     catLabel: { label: 'Category', get: p => CAT_NAME[p.cat] },
-    price: { label: 'Price', order: PRICE_ORDER, get: p => p.price < 20000 ? PRICE_ORDER[0] : p.price < 50000 ? PRICE_ORDER[1] : p.price < 100000 ? PRICE_ORDER[2] : PRICE_ORDER[3] }
+    price: { label: 'Price', order: PRICE_ORDER, get: p => !p.price ? PRICE_ORDER[4] : p.price < 20000 ? PRICE_ORDER[0] : p.price < 50000 ? PRICE_ORDER[1] : p.price < 100000 ? PRICE_ORDER[2] : PRICE_ORDER[3] }
   };
   const CATS = {
-    watches: { title: 'Watches', intro: 'Rolex, Patek Philippe, Audemars Piguet and Cartier, pre-owned and unworn. Every watch carries a two-year ECJ Luxe warranty.', facets: ['brand', 'family', 'cond', 'setGroup', 'metal', 'sizeBucket', 'price'], chips: 'brand' },
-    jewelry: { title: 'Jewelry', intro: 'Signed pieces from Van Cleef & Arpels, Cartier and Hermès, and natural diamonds set in 18k gold.', facets: ['brand', 'type', 'metal', 'cond', 'price'], chips: 'type' },
-    hermes: { title: 'Hermès', intro: 'Birkin and Kelly, unworn and pre-owned. The date stamp, leather, hardware and everything included is listed on every bag.', facets: ['family', 'cond', 'hardware', 'leather', 'price'], chips: 'family' },
-    'home-office': { title: 'Home & Office', intro: 'Buben & Zorweg watch winders and safes, Berd Vaye sculpture, Montegrappa pens and Lalique crystal.', facets: ['brand', 'type', 'price'], chips: null },
+    watches: { title: 'Watches', intro: 'Rolex, Patek Philippe, Audemars Piguet, Hublot and more, new and pre-owned. Available pieces come first; sold pieces show what we have placed with collectors.', facets: ['avail', 'brand', 'family', 'cond', 'setGroup', 'metal', 'sizeBucket', 'price'], chips: 'brand' },
+    jewelry: { title: 'Jewelry', intro: 'Signed pieces from Van Cleef & Arpels, Cartier and Chopard, and natural diamonds set in 18k gold. Available pieces come first.', facets: ['avail', 'type', 'brand', 'metal', 'cond', 'price'], chips: 'type' },
+    hermes: { title: 'Hermès', intro: 'Birkin, Kelly and Constance, unworn and pre-owned, alongside Judith Leiber and other designer bags. Available bags come first.', facets: ['avail', 'family', 'brand', 'cond', 'hardware', 'leather', 'price'], chips: 'family' },
+    'home-office': { title: 'Home & Office', intro: 'Buben & Zörweg safes and watch winders, Romero Britto, Lalique and Berd Vay’e crystal, fine pens, wall art and custom tables. Available pieces come first.', facets: ['avail', 'type', 'brand', 'price'], chips: 'type' },
+    apparel: { title: 'Apparel', intro: 'Chrome Hearts sunglasses, Bugatti eyewear and ECJ Luxe hats. Available pieces come first.', facets: ['avail', 'type', 'brand', 'price'], chips: 'type' },
     new: { title: 'New arrivals', intro: 'The newest arrivals to ECJ Luxe, with inventory being updated regularly.', facets: ['catLabel', 'brand', 'cond', 'price'], chips: 'catLabel' },
     saved: { title: 'Saved pieces', intro: 'Pieces you have saved on this device. Mention them when you book a viewing and they will be ready when you arrive.', facets: [], chips: null },
-    maison: { title: '', intro: '', facets: ['catLabel', 'price'], chips: null }
+    maison: { title: '', intro: '', facets: ['avail', 'catLabel', 'price'], chips: null }
   };
   const SPECIAL = { unworn: ['cond', 'Unworn'], 'full-set': ['setGroup', 'With original box'], 'under-20k': ['price', PRICE_ORDER[0]], exotic: ['leather', 'Exotic'] };
   const SPECIAL_TITLE = { unworn: 'Unworn', 'full-set': 'Box & papers', 'under-20k': 'Under $20,000', exotic: 'Exotic leathers' };
@@ -80,23 +108,24 @@
   }
   const PLURAL = { Ring: 'Rings', Bracelet: 'Bracelets', Necklace: 'Necklaces' };
   const show = v => PLURAL[v] || v;
-  const badgeClass = b => (b === 'Rare' || b === 'Limited edition') ? ' badge--rare' : b === 'Reduced' ? ' badge--reduced' : '';
+  const badgeClass = b => (b === 'Rare' || b === 'Limited edition') ? ' badge--rare' : b === 'Reduced' ? ' badge--reduced' : b === 'Sold' ? ' badge--sold' : '';
   const fullName = p => `${p.brand} ${p.model}${p.nick ? ' “' + p.nick + '”' : ''}`;
+  const priceText = p => p.sold ? 'Sold' : p.price ? money(p.price) : 'Price on request';
 
   function card(p, opts = {}) {
     const saved = state.saved.has(p.id);
-    const alt = p.imgs[1]; // a second product angle; on-wrist snapshots stay in the product gallery only
-    return `<article class="card" data-id="${p.id}"${opts.note ? ` data-note="${opts.note}"` : ''}>
+    const pics = p.thumbs || p.imgs, alt = pics[1]; // a second product angle; on-wrist snapshots stay in the product gallery only
+    return `<article class="card${p.sold ? ' card--sold' : ''}" data-id="${p.id}"${opts.note ? ` data-note="${opts.note}"` : ''}>
       <a class="card__media" href="#/piece/${p.id}" tabindex="-1" aria-hidden="true">
-        <div class="plate-img${opts.square ? ' plate-img--square' : ''}"><img src="${p.imgs[0]}" alt="" loading="lazy">${alt ? `<img class="card__alt" src="${alt}" alt="" loading="lazy">` : ''}</div>
-        <div class="card__badges">${(p.badges || []).slice(0, 1).map(b => `<span class="badge${badgeClass(b)}">${esc(b)}</span>`).join('')}</div>
+        <div class="plate-img${opts.square ? ' plate-img--square' : ''}"><img src="${pics[0]}" alt="" loading="lazy">${alt ? `<img class="card__alt" src="${alt}" alt="" loading="lazy">` : ''}</div>
+        <div class="card__badges">${(p.sold ? ['Sold'] : p.badges || []).slice(0, 1).map(b => `<span class="badge${badgeClass(b)}">${esc(b)}</span>`).join('')}</div>
       </a>
       <button class="heart" data-act="save" data-id="${p.id}" aria-pressed="${saved}" aria-label="Save ${esc(fullName(p))}">${ico('heart')}</button>
       <div class="card__body">
         <span class="card__brand">${esc(p.brand)}</span>
         <h3 class="card__model"><a href="#/piece/${p.id}">${esc(p.model)}${p.nick ? ` <span class="card__nick">“${esc(p.nick)}”</span>` : ''}</a></h3>
         <span class="card__meta mono">${metaLine(p)}</span>
-        <span class="card__price price">${money(p.price)}${p.was ? `<span class="was">${money(p.was)}</span>` : ''}</span>
+        <span class="card__price price">${priceText(p)}${p.was && !p.sold ? `<span class="was">${money(p.was)}</span>` : ''}</span>
       </div>
     </article>`;
   }
@@ -244,7 +273,7 @@
 
     <section class="section2 section2--ruled"><div class="wrap">
       ${headL('Just arrived', 'Latest', ['View all new arrivals', '#/new'])}
-      <div class="grid grid--4 grid--home">${[FEATURED].concat(P.filter(p => p !== FEATURED).slice(0, 8)).map((p, i) => card(p, { note: i === 0 ? 'card' : '' })).join('')}</div>
+      <div class="grid grid--4 grid--home">${[FEATURED].concat(available().filter(p => p !== FEATURED).slice(0, 8)).map((p, i) => card(p, { note: i === 0 ? 'card' : '' })).join('')}</div>
     </div></section>
 
     <section class="section2 worn" data-note="worn"><div class="wrap">
@@ -311,7 +340,8 @@
     'home-office': ['b-vault', 'A Buben & Zorweg safe and watch-winder cabinet'],
     new: ['b-rolex-display', 'Rolex watches on a glass display']
   };
-  const coll = { cat: null, base: [], f: {}, sort: 'new' };
+  const PAGE = 48;
+  const coll = { cat: null, base: [], f: {}, sort: 'new', limit: PAGE, sig: '' };
 
   function collectionHTML(cat, sl) {
     const cfg = CATS[cat];
@@ -319,10 +349,10 @@
     if (cat === 'maison') {
       base = P.filter(p => slug(p.brand) === sl);
       title = base[0] ? base[0].brand : 'Maison';
-      intro = `Every ${title} piece currently in the salon, across watches, jewelry and accessories.`;
+      intro = `Every ${title} piece we have offered, across watches, jewelry and accessories. Available pieces come first.`;
       trail = [['Home', '#/'], ['Maisons', '#/'], [title]];
     } else if (cat === 'saved') base = P.filter(p => state.saved.has(p.id));
-    else if (cat === 'new') base = P.slice();
+    else if (cat === 'new') base = available().filter(p => p.isNew || !p.remote);
     else base = P.filter(p => p.cat === cat);
 
     coll.cat = cat; coll.base = base; coll.sort = 'new'; coll.f = {};
@@ -331,7 +361,7 @@
     if (subtitle) trail = [['Home', '#/'], [cfg.title, '#/' + cat], [subtitle]];
 
     const chipKey = cfg.chips;
-    const chipVals = chipKey ? optionsFor(chipKey, base).map(o => o.v).slice(0, 6) : [];
+    const chipVals = chipKey ? optionsFor(chipKey, base).map(o => o.v).slice(0, 9) : [];
     const banner = BANNERS[cat];
     return `
     ${banner ? `<section class="cbanner" data-note="banner"><img src="${SRC(banner[0])}" alt="${esc(banner[1])}"><span class="cbanner__shade" aria-hidden="true"></span>
@@ -355,6 +385,7 @@
       <div style="min-width:0">
         <div class="active-filters" id="activeFilters" hidden></div>
         <div class="grid" id="grid"></div>
+        <div class="grid-more" id="gridMore"></div>
         ${cat !== 'saved' && cat !== 'home-office' ? `
         <div class="source-band" data-note="source">
           <div><blockquote>“I got two of my favorite AP watches from Bobby. They are hard to get and Bobby was able to get them!”<cite>Nicole Cha, client</cite></blockquote></div>
@@ -401,19 +432,23 @@
       }).join('')}</ul></div>`;
     }).join('');
   }
-  function sorted(items) {
-    const s = coll.sort;
-    return items.slice().sort((a, b) => s === 'low' ? a.price - b.price : s === 'high' ? b.price - a.price : b.id - a.id);
+  function sorted(items) { // available pieces always lead; prices on request sort last
+    const s = coll.sort, pr = (p, hi) => p.price || (hi ? -1 : Infinity);
+    return items.slice().sort((a, b) => (a.sold - b.sold) || (s === 'low' ? pr(a) - pr(b) : s === 'high' ? pr(b, 1) - pr(a, 1) : b.id - a.id));
   }
   function renderResults() {
     const grid = $('#grid'); if (!grid) return;
     const items = sorted(coll.base.filter(p => passes(p)));
+    const sig = JSON.stringify([coll.cat, coll.sort, Object.entries(coll.f).map(([k, set]) => [k, [...set]])]);
+    if (sig !== coll.sig) { coll.sig = sig; coll.limit = PAGE; }
     const promo = PROMOS[coll.cat];
-    let cards = items.map((p, i) => card(p, { note: i === 0 ? 'card' : '' }));
+    let cards = items.slice(0, coll.limit).map((p, i) => card(p, { note: i === 0 ? 'card' : '' }));
     if (promo && items.length >= 4) {
       const at = Math.min(4, cards.length);
       cards.splice(at, 0, `<a class="promo-tile" href="${promo.href}" data-act="promo" data-cat="${esc(promo.cat || '')}" data-interest="${esc(promo.interest || '')}" data-note="promo"><span class="label">${promo.label}</span><div style="display:grid;gap:14px"><h3>${promo.h}</h3><p>${promo.p}</p></div><span class="link" style="align-self:flex-start">${promo.cta} ${ARROW}</span></a>`);
     }
+    const more = $('#gridMore');
+    if (more) more.innerHTML = items.length > coll.limit ? `<button class="btn btn--ghost" data-act="more">Show more pieces</button>` : '';
     grid.innerHTML = items.length ? cards.join('') : coll.cat === 'saved'
       ? `<div class="empty"><h3 class="d-s">Nothing saved yet</h3><p>Tap the heart on any piece to keep it here. Saved pieces can be prepared for your private viewing.</p><a class="btn" href="#/new">Browse new arrivals</a></div>`
       : `<div class="empty"><h3 class="d-s">No pieces match these filters</h3><p>Clear a filter, or ask us to source the piece. We find hard-to-get references for clients every week.</p><div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center"><button class="btn btn--ghost" data-act="clear">Clear filters</button><button class="btn btn--salon" data-act="source">Ask us to find it</button></div></div>`;
@@ -437,13 +472,13 @@
   /* ───────── PRODUCT ───────── */
   function pieceHTML(p) {
     const gal = p.imgs.concat(p.life ? [p.life] : []);
-    const saved = state.saved.has(p.id), high = p.price >= 50000;
+    const saved = state.saved.has(p.id), high = p.price >= 50000 || !p.price;
     const catHref = '#/' + p.cat;
     const trail = [['Home', '#/'], [CAT_NAME[p.cat], catHref]];
     if (p.cat === 'watches' || p.cat === 'jewelry') trail.push([p.brand, '#/' + p.cat + '/' + slug(p.brand)]);
     trail.push([p.model]);
-    const tags = [p.cond, p.set && p.set !== '—' ? p.set : null, p.size, p.cat === 'hermes' ? p.metal + ' hardware' : p.metal, p.type].filter(Boolean);
-    const related = P.filter(q => q.id !== p.id && q.cat === p.cat).sort((a, b) => (b.brand === p.brand) - (a.brand === p.brand) || Math.abs(a.price - p.price) - Math.abs(b.price - p.price)).slice(0, 4);
+    const tags = [p.cond, p.set && p.set !== '—' ? p.set : null, p.size, p.cat === 'hermes' ? (p.metal ? p.metal + ' hardware' : null) : p.metal, p.type].filter(Boolean);
+    const related = available().filter(q => q.id !== p.id && q.cat === p.cat).sort((a, b) => (b.brand === p.brand) - (a.brand === p.brand) || Math.abs(a.price - p.price) - Math.abs(b.price - p.price)).slice(0, 4);
     const refLine = p.ref ? `<span>Ref. <b>${esc(p.ref)}</b></span>${p.year ? `<span>Year <b>${p.year}</b></span>` : `<span>Year <b>on request</b></span>`}`
       : p.stamp ? `<span>Stamp <b>${esc(p.stamp)}</b></span><span>Size <b>${esc(p.size)}</b></span>` : `<span>${esc(p.type || '')}</span>`;
     const viewing = `<button class="btn btn--salon btn--block" data-act="book-piece" data-id="${p.id}">Book a private viewing</button>`;
@@ -458,24 +493,24 @@
     <div class="wrap pdp">
       <div class="gallery" data-note="gallery" style="${gal.length > 1 ? '' : 'grid-template-columns:minmax(0,1fr)'}">
         ${gal.length > 1 ? `<div class="gallery__thumbs">${gal.map((src, i) => { const life = src === p.life; return `<button class="gallery__thumb${life ? ' no-blend' : ''}" data-act="thumb" data-src="${src}" data-life="${life ? 1 : 0}" aria-current="${i === 0}" aria-label="${life ? 'Worn' : 'Image ' + (i + 1)}"><img src="${src}" alt=""></button>`; }).join('')}</div>` : ''}
-        <div class="gallery__main" id="galleryMain"><img src="${p.imgs[0]}" alt="${esc(fullName(p) + ', ' + p.line)}"><svg class="seal seal--gallery" role="img" aria-label="Authenticated by ECJ Luxe"><use href="#ecj-seal"/></svg><span class="gallery__hint">${FINE ? 'Hover to zoom' : ''}</span></div>
+        <div class="gallery__main" id="galleryMain"><img src="${p.imgs[0]}" alt="${esc(fullName(p) + (p.line ? ', ' + p.line : ''))}"><svg class="seal seal--gallery" role="img" aria-label="Authenticated by ECJ Luxe"><use href="#ecj-seal"/></svg><span class="gallery__hint">${FINE ? 'Hover to zoom' : ''}</span></div>
       </div>
       <div class="buy">
         <div style="display:grid;gap:16px" data-note="ref">
-          <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap"><span class="card__brand">${esc(p.brand)}</span>${(p.badges || []).map(b => `<span class="badge${badgeClass(b)}" style="background:var(--plate)">${esc(b)}</span>`).join('')}</div>
+          <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap"><span class="card__brand">${esc(p.brand)}</span>${(p.badges || []).filter(b => b !== 'Sold').map(b => `<span class="badge${badgeClass(b)}" style="background:var(--plate)">${esc(b)}</span>`).join('')}</div>
           <h1 class="buy__title">${esc(p.model)}${p.nick ? ` <em>“${esc(p.nick)}”</em>` : ''}</h1>
           <p class="buy__line">${esc(p.line)}</p>
           <div class="buy__ref mono">${refLine}</div>
         </div>
-        <div class="buy__price"><span class="price">${money(p.price)}</span>${p.was ? `<span class="was">${money(p.was)}</span>` : ''}<small>${p.cat === 'watches' || p.cat === 'hermes' ? 'Trade-in credit accepted' : 'Prices in US dollars'}</small></div>
+        <div class="buy__price"><span class="price">${priceText(p)}</span>${p.was && !p.sold ? `<span class="was">${money(p.was)}</span>` : ''}<small>${p.sold ? 'This piece has found a home. We can look for another like it.' : p.cat === 'watches' || p.cat === 'hermes' ? 'Trade-in credit accepted' : 'Prices in US dollars'}</small></div>
         <div class="tags">${tags.map(t => `<span class="tag">${esc(t)}</span>`).join('')}</div>
-        <div class="buy__ctas" data-note="ctas">${high ? viewing + bagRow : bagRow + viewing}</div>
+        <div class="buy__ctas" data-note="ctas">${p.sold ? `<button class="btn btn--salon btn--block" data-act="source">Ask us to find one like it</button>` : high ? viewing + bagRow : bagRow + viewing}</div>
         <div class="buy__ask"><span>Questions about this piece?</span><span><a href="sms:+15613535216">Text a specialist</a> · <a href="tel:+15613535216">${PHONE}</a></span></div>
-        <div class="trade-card" data-note="trade"><div><b>Trade in toward this piece</b><p>Your watch, bag or jewelry can count toward the ${money(p.price)}.</p></div><a class="link" href="#/sell" data-act="trade-for" data-id="${p.id}">Start ${ARROW}</a></div>
+        ${p.sold || !p.price ? '' : `<div class="trade-card" data-note="trade"><div><b>Trade in toward this piece</b><p>Your watch, bag or jewelry can count toward the ${money(p.price)}.</p></div><a class="link" href="#/sell" data-act="trade-for" data-id="${p.id}">Start ${ARROW}</a></div>`}
         <ul class="assure" style="list-style:none;margin:0;padding:0" data-note="assure">${assure.map(([i, b, t]) => `<li>${ico(i).replace('class="i"', 'class="i" viewBox="0 0 32 32"')}<div><b>${b}</b>${t}</div></li>`).join('')}</ul>
         <div class="acc" data-note="specs">
-          <details open><summary>The details<i></i></summary><div class="acc__body"><table class="specs"><tbody>${p.specs.map(([k, v]) => `<tr><th scope="row">${esc(k)}</th><td>${esc(v)}</td></tr>`).join('')}</tbody></table></div></details>
-          ${p.note ? `<details><summary>Condition report<i></i></summary><div class="acc__body"><p class="note">${esc(p.note)}</p></div></details>` : ''}
+          ${p.specs.length ? `<details open><summary>The details<i></i></summary><div class="acc__body"><table class="specs"><tbody>${p.specs.map(([k, v]) => `<tr><th scope="row">${esc(k)}</th><td>${esc(v)}</td></tr>`).join('')}</tbody></table></div></details>` : ''}
+          ${p.note ? `<details${p.remote ? ' open' : ''}><summary>${p.remote ? 'About this piece' : 'Condition report'}<i></i></summary><div class="acc__body"><p class="note">${esc(p.note)}</p></div></details>` : ''}
           <details><summary>Shipping, payment &amp; exchange<i></i></summary><div class="acc__body"><table class="specs"><tbody>
             <tr><th scope="row">Domestic</th><td>Ships overnight. Or collect it at the salon by appointment.</td></tr>
             <tr><th scope="row">International</th><td>Paid by wire transfer in US dollars. Import duties are paid by the recipient. International sales are final.</td></tr>
@@ -485,7 +520,7 @@
       </div>
     </div>
     ${related.length ? `<section class="section section--plate"><div class="wrap">${sectionHead('From the same case', 'You may also consider', `<a class="link" href="${catHref}">All ${esc(CAT_NAME[p.cat].toLowerCase())} ${ARROW}</a>`)}<div class="grid grid--4">${related.map(q => card(q)).join('')}</div></div></section>` : ''}
-    <div class="mobile-buy"><div><span class="card__brand">${esc(p.brand)}</span><div class="price">${money(p.price)}</div></div><button class="btn btn--salon" data-act="book-piece" data-id="${p.id}">Book a viewing</button></div>`;
+    <div class="mobile-buy"><div><span class="card__brand">${esc(p.brand)}</span><div class="price">${priceText(p)}</div></div>${p.sold ? `<button class="btn btn--salon" data-act="source">Find one like it</button>` : `<button class="btn btn--salon" data-act="book-piece" data-id="${p.id}">Book a viewing</button>`}</div>`;
   }
 
   /* ───────── SELL ───────── */
@@ -775,7 +810,7 @@
   function runSearch(q) {
     const out = $('#searchResults');
     const terms = q.toLowerCase().trim().split(/\s+/).filter(Boolean);
-    if (!terms.length) { out.innerHTML = `<div class="search__results">${P.slice(0, 6).map(p => card(p, { line: false, square: true })).join('')}</div>`; return; }
+    if (!terms.length) { out.innerHTML = `<div class="search__results">${available().slice(0, 6).map(p => card(p, { line: false, square: true })).join('')}</div>`; return; }
     const hay = p => [p.brand, p.model, p.nick, p.line, p.ref, p.family, p.type, p.metal, CAT_NAME[p.cat], p.stamp].join(' ').toLowerCase();
     const hits = P.filter(p => terms.every(t => hay(p).includes(t)));
     out.innerHTML = hits.length ? `<div class="search__results" style="margin-top:14px">${hits.slice(0, 12).map(p => card(p, { line: false, square: true })).join('')}</div>`
@@ -832,7 +867,7 @@
       ${isHome ? `<figure class="notes-before"><img src="${SRC('before-home')}" alt="The current ecjluxe.com homepage"><figcaption>Before: ecjluxe.com today, at 1440px after the slider loads.</figcaption></figure>
       <div class="n-item" style="grid-template-columns:minmax(0,1fr)"><div><h4>Direction after the client review</h4><p>The first concept felt generic. This version is led by photography, taking cues from Jewels Aficionado: full-bleed images, styled still lifes, centred serif headings and a quiet black-and-white frame.</p><p>Product and banner photography is ECJ’s own. The homepage banner, the alligator leather and the Birkin in the slideshow are free-licence Unsplash and Pexels photographs, to be replaced with ECJ shots if they prefer.</p></div></div>` : ''}
       ${list.map((n, i) => `<div class="n-item" id="note-${n.k}"><span class="n-item__num">${i + 1}</span><div><h4>${esc(n.h)}</h4>${n.was ? `<p class="n-was"><b>Before:</b> ${esc(n.was)}</p>` : ''}<p>${esc(n.now)}</p>${n.ref ? `<p class="n-ref">Reference: ${esc(n.ref)}</p>` : ''}<button data-act="note-go" data-k="${n.k}">Show on page</button></div></div>`).join('')}
-      <p class="notes-intro" style="margin-top:20px;font-size:12.5px">Prototype built with 30 pieces from ECJ’s live inventory on 12 October 2026.</p>`;
+      <p class="notes-intro" style="margin-top:20px;font-size:12.5px">Built with ECJ’s full catalogue of 2,405 pieces, available and sold, taken from ecjluxe.com on 17 October 2026. Thirty featured pieces carry restaged photography and condition notes.</p>`;
   }
   function placePins() {
     const box = $('#pins'); box.innerHTML = '';
@@ -1049,6 +1084,7 @@
       case 'chip-all': { const k = CATS[coll.cat].chips; coll.f[k].clear(); renderResults(); break; }
       case 'unfilter': coll.f[t.dataset.k].delete(t.dataset.v); renderResults(); break;
       case 'clear': Object.values(coll.f).forEach(x => x.clear()); renderResults(); break;
+      case 'more': coll.limit += PAGE; renderResults(); break;
 
       /* product */
       case 'thumb': { const m = $('#galleryMain img'); m.src = t.dataset.src; $('#galleryMain').classList.toggle('no-blend', t.dataset.life === '1'); $$('.gallery__thumb').forEach(x => x.setAttribute('aria-current', String(x === t))); break; }

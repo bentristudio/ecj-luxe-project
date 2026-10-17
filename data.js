@@ -1,5 +1,6 @@
 /* ECJ Luxe — redesign prototype data.
-   Pieces, prices and specs are taken from ecjluxe.com inventory (in stock, 12 Oct 2026).
+   Thirty featured pieces with restaged photography, taken from ecjluxe.com inventory (in stock, 12 Oct 2026).
+   The full catalogue, available and sold, is in catalogue.js.
    Product names are restructured into maison / model / reference the way collectors search. */
 
 window.ECJ = (function () {
